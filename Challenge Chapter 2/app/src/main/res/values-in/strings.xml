@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Challenge Chap2</string>
+    <string name="tv_greeting_user">Selamat pagi, Sandy</string>
+    <string name="tv_banner_1">Pilih sesuai keinginan</string>
+    <string name="tv_banner_2">Sekarang kamu bisa memesan dari berbagai restoran dalam satu waktu</string>
+    <string name="tv_category_food_1">mie</string>
+    <string name="tv_category_3">nasi</string>
+    <string name="tv_category_4">makanan laut</string>
+    <string name="tv_list_menu">Menu Pilihan Makanan</string>
+</resources>

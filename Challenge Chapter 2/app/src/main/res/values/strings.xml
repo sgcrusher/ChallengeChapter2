@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Challenge Chap2</string>
+    <string name="tv_greeting_user">Morning, Sandy</string>
+    <string name="tv_location_user" translatable="false">Bandar Lampung, Lampung</string>
+    <string name="tv_banner_1">Selected Preference</string>
+    <string name="tv_banner_2">You can now order from multiple restaurants at the same time</string>
+    <string name="tv_category_food_1">noodles</string>
+    <string name="tv_category_food_2" translatable="false">ramen</string>
+    <string name="tv_category_3">rice</string>
+    <string name="tv_category_4">seafood</string>
+    <string name="tv_list_menu">List Food Menu</string>
+    <string name="tv_food_1" translatable="false">Ayam Panggang</string>
+    <string name="tv_price_food_1" translatable="false">Rp. 30.000</string>
+    <string name="tv_food_2" translatable="false">Nasi Kebuli</string>
+    <string name="tv_price_food_2" translatable="false">Rp. 25.000</string>
+    <string name="tv_food_3" translatable="false">Es Teler</string>
+    <string name="tv_price_food_3" translatable="false">Rp. 20.000</string>
+    <string name="tv_food_4" translatable="false">Cumi tepung</string>
+    <string name="tv_price_food_4" translatable="false">Rp. 35.000</string>
 </resources>
