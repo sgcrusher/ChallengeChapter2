@@ -33,6 +33,7 @@ class DetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         showFoodDetail()
         setClickListener()
+        countFoodTotal()
     }
 
     private fun setClickListener() {
@@ -52,6 +53,18 @@ class DetailFragment : Fragment() {
         val url = food?.foodUrllocation
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         startActivity(intent)
+    }
+
+    private fun countFoodTotal(){
+        var foodTotal = 1
+        binding.ivPlusButton.setOnClickListener{
+            foodTotal += 1
+            binding.tvFoodTotal.text = foodTotal.toString()
+        }
+        binding.ivMinusButton.setOnClickListener{
+            foodTotal -= 1
+            binding.tvFoodTotal.text = foodTotal.toString()
+        }
     }
 
     private fun showFoodDetail() {
