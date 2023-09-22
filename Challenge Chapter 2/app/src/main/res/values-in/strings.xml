@@ -8,4 +8,6 @@
     <string name="tv_category_food_3">nasi</string>
     <string name="tv_category_food_4">makanan laut</string>
     <string name="tv_list_menu">Menu Pilihan Makanan</string>
+    <string name="tv_shop_location">Lokasi Toko</string>
+    <string name="tv_add_to_chart">Masukkan Keranjang</string>
 </resources>
