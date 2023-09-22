@@ -21,9 +21,9 @@
     <string name="tv_food_price_format" translatable="false">Rp. %.2f</string>
     <string name="tv_shop_distance_format" translatable="false">%.1f km</string>
     <string name="tv_shop_location">Shop Location</string>
-    <string name="tv_food_total">1</string>
+    <string name="tv_food_total" translatable="false">1</string>
     <string name="tv_add_to_chart">Add to chart</string>
-    <string name="tv_detail_food">Ayam Panggang</string>
+    <string name="tv_detail_food" translatable="false">Ayam Panggang</string>
 
 
 </resources>
