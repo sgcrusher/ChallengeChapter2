@@ -1,4 +1,4 @@
-package com.sg.challengechap2.presentation.homefragmentpage.adapter
+package com.sg.challengechap2.presentation.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.sg.challengechap2.core.ViewHolderBinder
-import com.sg.challengechap2.data.CategoryDataSource
 import com.sg.challengechap2.databinding.ItemGridFoodBinding
 import com.sg.challengechap2.databinding.ItemLinearFoodBinding
 import com.sg.challengechap2.model.Food

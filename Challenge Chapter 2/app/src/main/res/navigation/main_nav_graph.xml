@@ -3,27 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/foodListFragment">
+    app:startDestination="@id/navigation_home">
 
     <fragment
-        android:id="@+id/foodListFragment"
-        android:name="com.sg.challengechap2.presentation.homefragmentpage.FoodListFragment"
-        tools:layout="@layout/fragment_food_list"
-        android:label="FoodListFragment">
-        <action
-            android:id="@+id/action_foodListFragment_to_detailFragment"
-            app:destination="@id/detailFragment"
-            app:enterAnim="@anim/nav_default_pop_enter_anim" />
-    </fragment>
+        android:id="@+id/navigation_home"
+        android:name="com.sg.challengechap2.presentation.home.FoodListFragment"
+        android:label="foodListFragment"
+        tools:layout="@layout/fragment_food_list" />
     <fragment
-        android:id="@+id/detailFragment"
-        android:name="com.sg.challengechap2.presentation.detailfragmentpage.DetailFragment"
-        android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail">
-    <argument
-        android:name="food"
-        android:defaultValue="@null"
-        app:argType="com.sg.challengechap2.model.Food"
-        app:nullable="true" />
-    </fragment>
+        android:id="@+id/navigation_cart"
+        android:name="com.sg.challengechap2.presentation.cart.CartFragment"
+        android:label="cartFragment"
+        tools:layout="@layout/fragment_cart" />
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.sg.challengechap2.presentation.profile.ProfileFragment"
+        android:label="profileFragment"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
