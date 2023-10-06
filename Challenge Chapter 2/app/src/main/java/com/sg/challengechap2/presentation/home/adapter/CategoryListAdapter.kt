@@ -1,4 +1,4 @@
-package com.sg.challengechap2.presentation.homefragmentpage.adapter
+package com.sg.challengechap2.presentation.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -40,6 +40,6 @@ class CategoryItemViewHolder(
             onItemClick.invoke(item)
         }
         binding.icCategoryImg.setImageResource(item.categoryImg)
-        binding.tvCategory.text = item.categoryName.toString()
+        binding.tvCategory.text = item.categoryName
     }
 }

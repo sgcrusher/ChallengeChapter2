@@ -1,4 +1,4 @@
-package com.sg.challengechap2.presentation.homefragmentpage
+package com.sg.challengechap2.presentation.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -17,9 +17,9 @@ import com.sg.challengechap2.data.FoodDataSourceImpl
 import com.sg.challengechap2.databinding.FragmentFoodListBinding
 import com.sg.challengechap2.model.CategoryFood
 import com.sg.challengechap2.model.Food
-import com.sg.challengechap2.presentation.homefragmentpage.adapter.AdapterLayoutMode
-import com.sg.challengechap2.presentation.homefragmentpage.adapter.CategoryListAdapter
-import com.sg.challengechap2.presentation.homefragmentpage.adapter.FoodListAdapter
+import com.sg.challengechap2.presentation.home.adapter.AdapterLayoutMode
+import com.sg.challengechap2.presentation.home.adapter.CategoryListAdapter
+import com.sg.challengechap2.presentation.home.adapter.FoodListAdapter
 
 
 class FoodListFragment : Fragment() {
@@ -48,14 +48,14 @@ class FoodListFragment : Fragment() {
 
     private val foodAdapter: FoodListAdapter by lazy {
         FoodListAdapter(AdapterLayoutMode.LINEAR) { food: Food ->
-            navigateToDetail(food)
+            //navigateToDetail(food)
         }
     }
 
-    private fun navigateToDetail(food: Food) {
+/*    private fun navigateToDetail(food: Food) {
         val action = FoodListFragmentDirections.actionFoodListFragmentToDetailFragment(food)
         findNavController().navigate(action)
-    }
+    }*/
 
 
     override fun onCreateView(

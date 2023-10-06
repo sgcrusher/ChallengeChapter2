@@ -24,6 +24,11 @@
     <string name="tv_food_total" translatable="false">1</string>
     <string name="tv_add_to_chart">Add to chart</string>
     <string name="tv_detail_food" translatable="false">Ayam Panggang</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txt_home_nav">Home</string>
+    <string name="txt_cart_nav">Cart</string>
+    <string name="txt_profile_nav">Profile</string>
 
 
 </resources>

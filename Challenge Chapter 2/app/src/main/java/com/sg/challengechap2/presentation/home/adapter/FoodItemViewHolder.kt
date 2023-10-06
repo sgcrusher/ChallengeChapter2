@@ -1,4 +1,4 @@
-package com.sg.challengechap2.presentation.homefragmentpage.adapter
+package com.sg.challengechap2.presentation.home.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.sg.challengechap2.R

@@ -2,6 +2,8 @@ package com.sg.challengechap2.presentation.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.sg.challengechap2.R
 import com.sg.challengechap2.databinding.ActivityMainBinding
 
@@ -13,5 +15,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        setupBottomNav()
+    }
+    private fun setupBottomNav() {
+        val navController = findNavController(R.id.main_nav_host_fragment)
+        binding.navigationView.setupWithNavController(navController)
     }
 }
