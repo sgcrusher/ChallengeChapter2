@@ -7,7 +7,7 @@ import com.sg.challengechap2.databinding.ItemListCartBinding
 import com.sg.challengechap2.model.CartFood
 import com.sg.challengechap2.presentation.cart.adapter.CartListAdapter
 import com.sg.challengechap2.presentation.cart.adapter.CartListener
-import com.sg.challengechap2.presentation.utils.doneEditing
+import com.sg.challengechap2.utils.doneEditing
 
 
 class CartItemViewHolder(

@@ -5,8 +5,8 @@ import com.sg.challengechap2.data.local.database.datasource.FoodDataSource
 import com.sg.challengechap2.data.local.database.mapper.toFoodList
 import com.sg.challengechap2.model.CategoryFood
 import com.sg.challengechap2.model.Food
-import com.sg.challengechap2.presentation.utils.ResultWrapper
-import com.sg.challengechap2.presentation.utils.proceed
+import com.sg.challengechap2.utils.ResultWrapper
+import com.sg.challengechap2.utils.proceed
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

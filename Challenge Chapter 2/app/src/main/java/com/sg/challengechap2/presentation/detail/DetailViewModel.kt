@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sg.challengechap2.data.repository.CartRepository
 import com.sg.challengechap2.model.Food
-import com.sg.challengechap2.presentation.utils.ResultWrapper
+import com.sg.challengechap2.utils.ResultWrapper
 import kotlinx.coroutines.launch
 
 class DetailViewModel(
