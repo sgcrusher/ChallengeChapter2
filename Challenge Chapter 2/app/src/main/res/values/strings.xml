@@ -38,6 +38,16 @@
     <string name="txt_cash">Cash</string>
     <string name="total_qty">x%s</string>
     <string name="txt_total_pembayaran_checkout">Total Price</string>
+    <string name="tv_profile">Profile</string>
+    <string name="bt_submit">Submit</string>
+    <string name="et_number">098721</string>
+    <string name="txt_number">number</string>
+    <string name="et_hello">Hello</string>
+    <string name="txt_bio">Bio</string>
+    <string name="et_password">12345</string>
+    <string name="txt_password">password</string>
+    <string name="et_username">Sandy Gustyanto</string>
+    <string name="txt_username">username</string>
 
 
 </resources>
