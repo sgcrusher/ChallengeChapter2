@@ -1,5 +1,6 @@
 package com.sg.challengechap2.presentation.checkout
 
+import CheckoutViewHolder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -18,7 +19,7 @@ import com.sg.challengechap2.presentation.utils.proceedWhen
 
 class CheckoutActivity : AppCompatActivity() {
 
-    private val viewModel: CheckoutViewModel by viewModels {
+    private val viewModel:ChecktViewModel by viewModels {
         val database =
             AppDatabase.getInstance(this)
         val cartDao = database.cartDao()
@@ -27,7 +28,7 @@ class CheckoutActivity : AppCompatActivity() {
         val repo: CartRepository =
             CartRepositoryImpl(cartDataSource)
         GenericViewModelFactory.create(
-            CheckoutViewModel(repo)
+            ChecktViewModel(repo)
         )
     }
     private val binding: ActivityCheckoutBinding by lazy {
