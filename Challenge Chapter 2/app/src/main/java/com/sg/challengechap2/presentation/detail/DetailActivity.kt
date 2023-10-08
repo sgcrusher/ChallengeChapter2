@@ -40,7 +40,7 @@ class DetailActivity : AppCompatActivity() {
         observeData()
         backToHomeClickListener()
         countingClickListener()
-        mapsClickListener()
+        mapsClickListener(viewModel.food)
 
     }
 
@@ -94,20 +94,17 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun mapsClickListener() {
+    private fun mapsClickListener(food: Food?) {
         binding.llShopLocation.setOnClickListener {
-            navigateToGoogleMaps()
+            navigateToGoogleMaps(food)
         }
     }
 
-    private fun navigateToGoogleMaps() {
-        val mapsIntentUri =
-            Uri.parse("https://maps.app.goo.gl/QLChXJcYJUuQWPQh8")
-        val mapsIntent = Intent(
-            Intent.ACTION_VIEW,
-            mapsIntentUri
-        )
-        startActivity(mapsIntent)
+    private fun navigateToGoogleMaps(food: Food?) {
+        val url = food?.foodUrllocation
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(intent)
+
     }
 
     companion object {
