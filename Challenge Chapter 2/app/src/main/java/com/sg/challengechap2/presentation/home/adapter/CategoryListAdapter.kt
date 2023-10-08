@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sg.challengechap2.core.ViewHolderBinder
-import com.sg.challengechap2.data.CategoryDataSource
+import com.sg.challengechap2.data.dummy.CategoryDataSource
 import com.sg.challengechap2.databinding.ItemListCategoryBinding
 import com.sg.challengechap2.model.CategoryFood
 

@@ -6,13 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sg.challengechap2.R
-import com.sg.challengechap2.data.CategoryDataSource
-import com.sg.challengechap2.data.CategoryDataSourceImpl
-import com.sg.challengechap2.data.FoodDataSource
-import com.sg.challengechap2.data.FoodDataSourceImpl
+import com.sg.challengechap2.data.dummy.FoodDataSource
+import com.sg.challengechap2.data.dummy.FoodDataSourceImpl
 import com.sg.challengechap2.databinding.FragmentCartBinding
-import com.sg.challengechap2.databinding.FragmentFoodListBinding
 
 
 class CartFragment : Fragment() {

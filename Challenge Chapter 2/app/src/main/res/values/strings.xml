@@ -30,6 +30,7 @@
     <string name="txt_cart_nav">Cart</string>
     <string name="txt_profile_nav">Profile</string>
     <string name="et_note_cart">Notes</string>
+    <string name="no_value">Tidak ada data</string>
 
 
 </resources>

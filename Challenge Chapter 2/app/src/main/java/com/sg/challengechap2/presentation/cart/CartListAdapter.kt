@@ -7,13 +7,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sg.challengechap2.R
 import com.sg.challengechap2.core.ViewHolderBinder
-import com.sg.challengechap2.data.CategoryDataSource
-import com.sg.challengechap2.data.FoodDataSource
+import com.sg.challengechap2.data.dummy.FoodDataSource
 import com.sg.challengechap2.databinding.ItemListCartBinding
-import com.sg.challengechap2.databinding.ItemListCategoryBinding
-import com.sg.challengechap2.model.CategoryFood
 import com.sg.challengechap2.model.Food
-import com.sg.challengechap2.presentation.home.adapter.CategoryItemViewHolder
 
 
 class CartListAdapter (

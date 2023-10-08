@@ -1,4 +1,4 @@
-package com.sg.challengechap2.data
+package com.sg.challengechap2.data.dummy
 
 import com.sg.challengechap2.R
 import com.sg.challengechap2.model.Food
@@ -11,6 +11,7 @@ class FoodDataSourceImpl() : FoodDataSource {
     override fun getFoodData(): List<Food> {
         return mutableListOf(
             Food(
+                foodId = 1,
                 foodName = "Ayam Panggang",
                 foodDescription = "Ayam Panggang : Daging Ayam yang dimasak sebagai hidangan dengan cara dipanggang.",
                 foodPrice = 30000.0,
@@ -20,6 +21,7 @@ class FoodDataSourceImpl() : FoodDataSource {
                 foodUrllocation = "https://maps.app.goo.gl/JNvoNrTZDhRpSkTQ8"
             ),
             Food(
+                foodId = 2,
                 foodName = "Nasi Kebuli",
                 foodDescription = "Nasi Kebuli: Hidangan nasi kaya akan rempah dengan aroma khas bercita rasa gurih.",
                 foodPrice = 25000.0,
@@ -29,6 +31,7 @@ class FoodDataSourceImpl() : FoodDataSource {
                 foodUrllocation = "https://maps.app.goo.gl/XVXw2fcoxb8rXGUh9"
             ),
             Food(
+                foodId = 3,
                 foodName = "Es Teler",
                 foodDescription = "Es Teler: koaktail buah asli Indonesia.",
                 foodPrice = 20000.0,
@@ -38,6 +41,7 @@ class FoodDataSourceImpl() : FoodDataSource {
                 foodUrllocation = "https://maps.app.goo.gl/V3VsgWF6hED8H1qx9"
             ),
             Food(
+                foodId = 4,
                 foodName = "Cumi Tepung",
                 foodDescription = "Cumi Tepung: Cumi yang digoreng dengan tepung.",
                 foodPrice = 35000.0,
