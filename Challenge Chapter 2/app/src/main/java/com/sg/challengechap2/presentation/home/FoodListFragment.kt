@@ -22,6 +22,7 @@ import com.sg.challengechap2.data.repository.FoodRepositoryImpl
 import com.sg.challengechap2.databinding.FragmentFoodListBinding
 import com.sg.challengechap2.model.CategoryFood
 import com.sg.challengechap2.model.Food
+import com.sg.challengechap2.presentation.detail.DetailActivity
 import com.sg.challengechap2.presentation.home.adapter.AdapterLayoutMode
 import com.sg.challengechap2.presentation.home.adapter.CategoryListAdapter
 import com.sg.challengechap2.presentation.home.adapter.FoodListAdapter
@@ -55,7 +56,7 @@ class FoodListFragment : Fragment() {
 
     private val foodAdapter: FoodListAdapter by lazy {
         FoodListAdapter(AdapterLayoutMode.LINEAR) { food: Food ->
-            //navigateToDetail(food)
+            navigateToDetail(food)
         }
     }
 
@@ -68,10 +69,11 @@ class FoodListFragment : Fragment() {
         GenericViewModelFactory.create(FoodViewModel(repo))
     }
 
-/*    private fun navigateToDetail(food: Food) {
-        val action = FoodListFragmentDirections.actionFoodListFragmentToDetailFragment(food)
-        findNavController().navigate(action)
-    }*/
+    private fun navigateToDetail(food: Food) {
+        /*val action = FoodListFragmentDirections.actionFoodListFragmentToDetailFragment(food)
+        findNavController().navigate(action)*/
+        DetailActivity.startActivity(requireContext(),food)
+    }
 
 
     override fun onCreateView(
