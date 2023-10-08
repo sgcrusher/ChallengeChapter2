@@ -145,7 +145,6 @@ class FoodListFragment : Fragment() {
     private fun setupSwitch() {
         binding.buttonSwitchMode.setOnClickListener {
             toggleLayoutMode()
-            setObserveData()
         }
     }
 
@@ -164,6 +163,7 @@ class FoodListFragment : Fragment() {
             }
         }
         foodAdapter.refreshList()
+        setObserveData()
     }
 
 }

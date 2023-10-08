@@ -31,6 +31,13 @@
     <string name="txt_profile_nav">Profile</string>
     <string name="et_note_cart">Notes</string>
     <string name="no_value">Tidak ada data</string>
+    <string name="title_method_payment">Method pick up</string>
+    <string name="txt_pick_up">Pick Up Self</string>
+    <string name="txt_delivery">Delivery</string>
+    <string name="txt_transfer">Transfer</string>
+    <string name="txt_cash">Cash</string>
+    <string name="total_qty">x%s</string>
+    <string name="txt_total_pembayaran_checkout">Total Price</string>
 
 
 </resources>
