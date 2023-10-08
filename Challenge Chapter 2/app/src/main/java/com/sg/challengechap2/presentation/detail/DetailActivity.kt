@@ -86,9 +86,10 @@ class DetailActivity : AppCompatActivity() {
         food?.let {
             binding.ivFoodDetailImg.load(it.foodImg)
             binding.tvFoodNameDetail.text = it.foodName
-            binding.tvFoodPrice.text = String.format("Rp. ", it.foodPrice)
+            binding.tvFoodPrice.text = getString(R.string.tv_food_price_format, food?.foodPrice)
             binding.tvFoodDescription.text = it.foodDescription
-            binding.tvShopLocation.text = getString(R.string.tv_shop_location)
+            binding.tvShopLocation.text = food?.foodShopLocation
+            binding.tvFoodShopDistance.text = getString(R.string.tv_shop_distance_format, food?.foodShopDistance)
             binding.buttonAddToChart.text = getString(R.string.tv_add_to_chart)
         }
     }
