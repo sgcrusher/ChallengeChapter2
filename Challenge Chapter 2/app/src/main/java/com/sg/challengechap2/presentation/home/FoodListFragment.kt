@@ -6,20 +6,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.fragment.findNavController
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sg.challengechap2.R
-import com.sg.challengechap2.data.CategoryDataSource
-import com.sg.challengechap2.data.CategoryDataSourceImpl
-import com.sg.challengechap2.data.FoodDataSource
-import com.sg.challengechap2.data.FoodDataSourceImpl
+import com.sg.challengechap2.data.dummy.CategoryDataSource
+import com.sg.challengechap2.data.dummy.CategoryDataSourceImpl
+import com.sg.challengechap2.data.dummy.FoodDataSource
+import com.sg.challengechap2.data.dummy.FoodDataSourceImpl
+import com.sg.challengechap2.data.local.database.AppDatabase
+import com.sg.challengechap2.data.local.database.datasource.FoodDatabaseDataSource
+import com.sg.challengechap2.data.repository.FoodRepository
+import com.sg.challengechap2.data.repository.FoodRepositoryImpl
 import com.sg.challengechap2.databinding.FragmentFoodListBinding
 import com.sg.challengechap2.model.CategoryFood
 import com.sg.challengechap2.model.Food
 import com.sg.challengechap2.presentation.home.adapter.AdapterLayoutMode
 import com.sg.challengechap2.presentation.home.adapter.CategoryListAdapter
 import com.sg.challengechap2.presentation.home.adapter.FoodListAdapter
+import com.sg.challengechap2.presentation.utils.GenericViewModelFactory
+import com.sg.challengechap2.presentation.utils.proceedWhen
 
 
 class FoodListFragment : Fragment() {
@@ -52,6 +59,15 @@ class FoodListFragment : Fragment() {
         }
     }
 
+    private val foodViewModel :FoodViewModel by viewModels {
+       // val cds : CategoryDataSource = CategoryDataSourceImpl()
+        val database = AppDatabase.getInstance(requireContext())
+        val foodDao = database.foodDao()
+        val foodDataSource = FoodDatabaseDataSource(foodDao)
+        val repo: FoodRepository = FoodRepositoryImpl(foodDataSource)
+        GenericViewModelFactory.create(FoodViewModel(repo))
+    }
+
 /*    private fun navigateToDetail(food: Food) {
         val action = FoodListFragmentDirections.actionFoodListFragmentToDetailFragment(food)
         findNavController().navigate(action)
@@ -71,6 +87,42 @@ class FoodListFragment : Fragment() {
         setupCategoryRecyclerview()
         setupFoodRecyclerView()
         setupSwitch()
+
+    }
+
+    private fun setObserveData() {
+        foodViewModel.foodData.observe(viewLifecycleOwner){
+            it.proceedWhen(
+                doOnSuccess = { result ->
+                    binding.layoutState.root.isVisible = false
+                    binding.layoutState.pbLoading.isVisible = false
+                    binding.layoutState.tvError.isVisible = false
+                    binding.rvFoodList.isVisible = true
+                    result.payload?.let {
+                        foodAdapter.submitList(it)
+                    }
+                },
+                doOnLoading = {
+                    binding.layoutState.root.isVisible = true
+                    binding.layoutState.pbLoading.isVisible = true
+                    binding.layoutState.tvError.isVisible = false
+                    binding.rvFoodList.isVisible = false
+                },
+                doOnError = { err ->
+                    binding.layoutState.root.isVisible = true
+                    binding.layoutState.pbLoading.isVisible = false
+                    binding.layoutState.tvError.isVisible = true
+                    binding.layoutState.tvError.text = err.exception?.message.orEmpty()
+                    binding.rvFoodList.isVisible = false
+                }, doOnEmpty = {
+                    binding.layoutState.root.isVisible = true
+                    binding.layoutState.pbLoading.isVisible = false
+                    binding.layoutState.tvError.isVisible = true
+                    binding.layoutState.tvError.text = getString(R.string.no_value)
+                    binding.rvFoodList.isVisible = false
+                }
+            )
+        }
     }
 
     private fun setupCategoryRecyclerview() {
@@ -87,12 +139,13 @@ class FoodListFragment : Fragment() {
             layoutManager = GridLayoutManager(requireContext(), span)
             adapter = this@FoodListFragment.foodAdapter
         }
-        foodAdapter.submitList(foodDataSource.getFoodData())
+        setObserveData()
     }
 
     private fun setupSwitch() {
         binding.buttonSwitchMode.setOnClickListener {
             toggleLayoutMode()
+            setObserveData()
         }
     }
 
