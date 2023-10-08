@@ -17,6 +17,8 @@ import com.sg.challengechap2.data.dummy.FoodDataSource
 import com.sg.challengechap2.data.dummy.FoodDataSourceImpl
 import com.sg.challengechap2.data.local.database.AppDatabase
 import com.sg.challengechap2.data.local.database.datasource.FoodDatabaseDataSource
+import com.sg.challengechap2.data.local.datastore.UserPreferenceDataSourceImpl
+import com.sg.challengechap2.data.local.datastore.appDataStore
 import com.sg.challengechap2.data.repository.FoodRepository
 import com.sg.challengechap2.data.repository.FoodRepositoryImpl
 import com.sg.challengechap2.databinding.FragmentFoodListBinding
@@ -26,8 +28,10 @@ import com.sg.challengechap2.presentation.detail.DetailActivity
 import com.sg.challengechap2.presentation.home.adapter.AdapterLayoutMode
 import com.sg.challengechap2.presentation.home.adapter.CategoryListAdapter
 import com.sg.challengechap2.presentation.home.adapter.FoodListAdapter
-import com.sg.challengechap2.presentation.utils.GenericViewModelFactory
-import com.sg.challengechap2.presentation.utils.proceedWhen
+import com.sg.challengechap2.presentation.main.MainViewModel
+import com.sg.challengechap2.utils.GenericViewModelFactory
+import com.sg.challengechap2.utils.PreferenceDataStoreHelperImpl
+import com.sg.challengechap2.utils.proceedWhen
 
 
 class FoodListFragment : Fragment() {
@@ -60,8 +64,8 @@ class FoodListFragment : Fragment() {
         }
     }
 
-    private val foodViewModel :FoodViewModel by viewModels {
-       // val cds : CategoryDataSource = CategoryDataSourceImpl()
+    private val foodViewModel: FoodViewModel by viewModels {
+        // val cds : CategoryDataSource = CategoryDataSourceImpl()
         val database = AppDatabase.getInstance(requireContext())
         val foodDao = database.foodDao()
         val foodDataSource = FoodDatabaseDataSource(foodDao)
@@ -69,10 +73,17 @@ class FoodListFragment : Fragment() {
         GenericViewModelFactory.create(FoodViewModel(repo))
     }
 
+    private val dataStoreViewModel: MainViewModel by viewModels {
+        val dataStore = this.requireContext().appDataStore
+        val dataStoreHelper = PreferenceDataStoreHelperImpl(dataStore)
+        val userPreferenceDataSource = UserPreferenceDataSourceImpl(dataStoreHelper)
+        GenericViewModelFactory.create(MainViewModel(userPreferenceDataSource))
+    }
+
     private fun navigateToDetail(food: Food) {
         /*val action = FoodListFragmentDirections.actionFoodListFragmentToDetailFragment(food)
         findNavController().navigate(action)*/
-        DetailActivity.startActivity(requireContext(),food)
+        DetailActivity.startActivity(requireContext(), food)
     }
 
 
@@ -93,7 +104,7 @@ class FoodListFragment : Fragment() {
     }
 
     private fun setObserveData() {
-        foodViewModel.foodData.observe(viewLifecycleOwner){
+        foodViewModel.foodData.observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = { result ->
                     binding.layoutState.root.isVisible = false
@@ -151,14 +162,27 @@ class FoodListFragment : Fragment() {
     }
 
     private fun toggleLayoutMode() {
+        dataStoreViewModel.userLinearLayoutLiveData.observe(viewLifecycleOwner) {
+            binding.buttonSwitchMode.isClickable = it
+        }
+
+        /*binding.buttonSwitchMode.setOnClickListener {
+            dataStoreViewModel.setLinearLayoutPref(true)
+            (binding.rvFoodList.layoutManager as GridLayoutManager).spanCount = if (true) 2 else 1
+            foodAdapter.adapterLayoutMode =
+                if (false) AdapterLayoutMode.GRID else AdapterLayoutMode.LINEAR
+            setObserveData()
+        }*/
         when (foodAdapter.adapterLayoutMode) {
             AdapterLayoutMode.LINEAR -> {
+                dataStoreViewModel.setLinearLayoutPref(isUsingLinear = true)
                 binding.buttonSwitchMode.setImageResource(R.drawable.ic_list_menu)
                 (binding.rvFoodList.layoutManager as GridLayoutManager).spanCount = 2
                 foodAdapter.adapterLayoutMode = AdapterLayoutMode.GRID
             }
 
             AdapterLayoutMode.GRID -> {
+                dataStoreViewModel.setLinearLayoutPref(isUsingLinear = true)
                 binding.buttonSwitchMode.setImageResource(R.drawable.ic_grid_menu)
                 (binding.rvFoodList.layoutManager as GridLayoutManager).spanCount = 1
                 foodAdapter.adapterLayoutMode = AdapterLayoutMode.LINEAR
@@ -167,5 +191,6 @@ class FoodListFragment : Fragment() {
         foodAdapter.refreshList()
         setObserveData()
     }
+    //}
 
 }

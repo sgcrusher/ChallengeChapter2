@@ -16,8 +16,8 @@ import com.sg.challengechap2.data.repository.CartRepository
 import com.sg.challengechap2.data.repository.CartRepositoryImpl
 import com.sg.challengechap2.databinding.ActivityDetailBinding
 import com.sg.challengechap2.model.Food
-import com.sg.challengechap2.presentation.utils.GenericViewModelFactory
-import com.sg.challengechap2.presentation.utils.proceedWhen
+import com.sg.challengechap2.utils.GenericViewModelFactory
+import com.sg.challengechap2.utils.proceedWhen
 
 class DetailActivity : AppCompatActivity() {
 

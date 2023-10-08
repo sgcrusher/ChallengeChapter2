@@ -20,8 +20,8 @@ import com.sg.challengechap2.model.CartFood
 import com.sg.challengechap2.presentation.cart.adapter.CartListAdapter
 import com.sg.challengechap2.presentation.cart.adapter.CartListener
 import com.sg.challengechap2.presentation.checkout.CheckoutActivity
-import com.sg.challengechap2.presentation.utils.GenericViewModelFactory
-import com.sg.challengechap2.presentation.utils.proceedWhen
+import com.sg.challengechap2.utils.GenericViewModelFactory
+import com.sg.challengechap2.utils.proceedWhen
 
 
 class CartFragment : Fragment() {

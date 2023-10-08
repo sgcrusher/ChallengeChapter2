@@ -1,4 +1,4 @@
-package com.sg.challengechap2.presentation.utils
+package com.sg.challengechap2.utils
 
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo

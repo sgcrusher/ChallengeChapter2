@@ -14,8 +14,8 @@ import com.sg.challengechap2.data.repository.CartRepository
 import com.sg.challengechap2.data.repository.CartRepositoryImpl
 import com.sg.challengechap2.databinding.ActivityCheckoutBinding
 import com.sg.challengechap2.presentation.cart.adapter.CartListAdapter
-import com.sg.challengechap2.presentation.utils.GenericViewModelFactory
-import com.sg.challengechap2.presentation.utils.proceedWhen
+import com.sg.challengechap2.utils.GenericViewModelFactory
+import com.sg.challengechap2.utils.proceedWhen
 
 class CheckoutActivity : AppCompatActivity() {
 

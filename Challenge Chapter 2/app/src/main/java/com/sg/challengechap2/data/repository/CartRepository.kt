@@ -7,9 +7,9 @@ import com.sg.challengechap2.data.local.database.mapper.toCartFoodList
 import com.sg.challengechap2.model.Cart
 import com.sg.challengechap2.model.CartFood
 import com.sg.challengechap2.model.Food
-import com.sg.challengechap2.presentation.utils.ResultWrapper
-import com.sg.challengechap2.presentation.utils.proceed
-import com.sg.challengechap2.presentation.utils.proceedFlow
+import com.sg.challengechap2.utils.ResultWrapper
+import com.sg.challengechap2.utils.proceed
+import com.sg.challengechap2.utils.proceedFlow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
