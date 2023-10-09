@@ -99,7 +99,7 @@ class FoodListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupCategoryRecyclerview()
         setupFoodRecyclerView()
-        setupSwitch()
+        toggleLayoutMode()
 
     }
 
@@ -155,42 +155,61 @@ class FoodListFragment : Fragment() {
         setObserveData()
     }
 
-    private fun setupSwitch() {
-        binding.buttonSwitchMode.setOnClickListener {
-            toggleLayoutMode()
-        }
-    }
+//    private fun setupSwitch() {
+//        binding.buttonSwitchMode.setOnClickListener {
+//            toggleLayoutMode()
+//        }
+//    }
 
     private fun toggleLayoutMode() {
         dataStoreViewModel.userLinearLayoutLiveData.observe(viewLifecycleOwner) {
-            binding.buttonSwitchMode.isClickable = it
+            binding.buttonSwitchMode.isChecked = it
         }
 
-        /*binding.buttonSwitchMode.setOnClickListener {
-            dataStoreViewModel.setLinearLayoutPref(true)
-            (binding.rvFoodList.layoutManager as GridLayoutManager).spanCount = if (true) 2 else 1
-            foodAdapter.adapterLayoutMode =
-                if (false) AdapterLayoutMode.GRID else AdapterLayoutMode.LINEAR
+        binding.buttonSwitchMode.setOnCheckedChangeListener { _, isUsingLinear ->
+            dataStoreViewModel.setLinearLayoutPref(isUsingLinear)
+            (binding.rvFoodList.layoutManager as GridLayoutManager).spanCount = if (isUsingLinear) 2 else 1
+            foodAdapter.adapterLayoutMode = if(isUsingLinear) AdapterLayoutMode.GRID else AdapterLayoutMode.LINEAR
             setObserveData()
-        }*/
-        when (foodAdapter.adapterLayoutMode) {
-            AdapterLayoutMode.LINEAR -> {
-                dataStoreViewModel.setLinearLayoutPref(isUsingLinear = true)
-                binding.buttonSwitchMode.setImageResource(R.drawable.ic_list_menu)
-                (binding.rvFoodList.layoutManager as GridLayoutManager).spanCount = 2
-                foodAdapter.adapterLayoutMode = AdapterLayoutMode.GRID
-            }
-
-            AdapterLayoutMode.GRID -> {
-                dataStoreViewModel.setLinearLayoutPref(isUsingLinear = true)
-                binding.buttonSwitchMode.setImageResource(R.drawable.ic_grid_menu)
-                (binding.rvFoodList.layoutManager as GridLayoutManager).spanCount = 1
-                foodAdapter.adapterLayoutMode = AdapterLayoutMode.LINEAR
-            }
         }
-        foodAdapter.refreshList()
-        setObserveData()
+
     }
-    //}
 
 }
+
+/*binding.buttonSwitchMode.setOnClickListener {
+            if (binding.buttonSwitchMode.isClickable){
+                dataStoreViewModel.setLinearLayoutPref(true)
+                binding.buttonSwitchMode.setImageResource(R.drawable.ic_grid_menu)
+                (binding.rvFoodList.layoutManager as GridLayoutManager).spanCount = if (true) 2 else 1
+                foodAdapter.adapterLayoutMode = if (false) AdapterLayoutMode.LINEAR else AdapterLayoutMode.GRID
+                setObserveData()
+
+            } else {
+                dataStoreViewModel.setLinearLayoutPref(true)
+                binding.buttonSwitchMode.setImageResource(R.drawable.ic_list_menu)
+                (binding.rvFoodList.layoutManager as GridLayoutManager).spanCount = if (true) 1 else 2
+                foodAdapter.adapterLayoutMode = if (false) AdapterLayoutMode.LINEAR else AdapterLayoutMode.GRID
+                setObserveData()
+            }*/
+
+
+/*when (binding.buttonSwitchMode.isClickable) {
+    AdapterLayoutMode.LINEAR -> {
+        dataStoreViewModel.setLinearLayoutPref(isUsingLinear = 1)
+        binding.buttonSwitchMode.setImageResource(R.drawable.ic_grid_menu)
+        (binding.rvFoodList.layoutManager as GridLayoutManager).spanCount = 2
+        foodAdapter.adapterLayoutMode = AdapterLayoutMode.GRID
+    }
+
+    AdapterLayoutMode.GRID -> {
+        dataStoreViewModel.setLinearLayoutPref(isUsingLinear = 0)
+        binding.buttonSwitchMode.setImageResource(R.drawable.ic_list_menu)
+        (binding.rvFoodList.layoutManager as GridLayoutManager).spanCount = 1
+        foodAdapter.adapterLayoutMode = AdapterLayoutMode.LINEAR
+    }
+}*/
+//setObserveData()
+//  }
+
+//}
