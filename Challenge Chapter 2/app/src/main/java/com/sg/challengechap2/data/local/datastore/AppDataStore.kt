@@ -8,5 +8,5 @@ import kotlinx.coroutines.flow.Flow
 
 
 val Context.appDataStore by preferencesDataStore(
-    name = "sgChallengeBinar"
+    name = "Challenge Chap 2"
 )
