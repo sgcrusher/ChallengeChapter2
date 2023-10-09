@@ -159,11 +159,11 @@
                     android:id="@+id/rv_category_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:itemCount="2"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    tools:itemCount="2"
                     tools:listitem="@layout/item_list_category">
 
                 </androidx.recyclerview.widget.RecyclerView>
@@ -191,11 +191,10 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
+                <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/button_switch_mode"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_list_menu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -212,16 +211,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toBottomOf="parent"/>
+                        app:layout_constraintTop_toBottomOf="parent" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_food_list"
                         android:layout_width="match_parent"
-                        tools:itemCount="4"
                         android:layout_height="wrap_content"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
+                        tools:itemCount="4"
                         tools:listitem="@layout/item_linear_food" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
