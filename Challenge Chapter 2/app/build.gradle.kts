@@ -39,6 +39,19 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
+    }
+
+    flavorDimensions += "env"
+
+    productFlavors {
+
+        create("production") {
+            buildConfigField("String", "BASE_URL", "\"https://d56d9874-3cab-47c9-bf4f-d58e0f14ca25.mock.pstmn.io\"")
+        }
+        create("integration") {
+            buildConfigField("String", "BASE_URL", "\"https://d56d9874-3cab-47c9-bf4f-d58e0f14ca25.mock.pstmn.io\"")
+        }
     }
 }
 
@@ -75,4 +88,9 @@ dependencies {
     //room database libraries
     implementation("androidx.room:room-ktx:2.5.2")
     ksp("androidx.room:room-compiler:2.5.2")
+
+    //retrofit & okhttp
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
 }
