@@ -48,6 +48,21 @@
     <string name="txt_password">password</string>
     <string name="et_username">Sandy Gustyanto</string>
     <string name="txt_username">username</string>
+    <string name="et_form_name">Name</string>
+    <string name="et_form_email">Email</string>
+    <string name="et_form_password">Password</string>
+    <string name="et_form_confirm_pass">Confirm password</string>
+    <string name="btn_register">Register</string>
+    <string name="tv_already_account">Already have an account? sign in</string>
+    <string name="btn_login">Login</string>
+    <string name="txt_login">Login</string>
+    <string name="tv_dont_have_account">Don\'t have account? Sign Up</string>
+    <string name="text_error_name_cannot_empty">Name cannot be empty</string>
+    <string name="text_error_email_empty">Email cannot be empty</string>
+    <string name="text_error_email_invalid">format email is invalid</string>
+    <string name="text_error_password_empty">password cannot be empty</string>
+    <string name="text_error_password_less_than_8_char">password must have 8 characters</string>
+    <string name="text_password_does_not_match">password are not the same</string>
 
 
 </resources>
