@@ -99,6 +99,7 @@ dependencies {
     //room database libraries
     implementation("androidx.room:room-ktx:2.5.2")
     ksp("androidx.room:room-compiler:2.5.2")
+
     //coil
     implementation("io.coil-kt:coil:2.4.0")
 
