@@ -25,7 +25,7 @@ class CartItemViewHolder(
             ivPlusCart.setOnClickListener{cartListener?.onPlusTotalItemCartClicked(item.cart)}
             ivMinusCart.setOnClickListener{cartListener?.onMinusTotalItemCartClicked(item.cart)}
             icDeleteCart.setOnClickListener{cartListener?.onRemoveCartClicked(item.cart)}
-            itemView.setOnClickListener{cartListener?.onCartClicked(item)}
+          //  itemView.setOnClickListener{cartListener?.onCartClicked(item.cart)}
         }
     }
 

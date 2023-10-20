@@ -30,9 +30,9 @@ class CartFragment : Fragment() {
 
     private val cartListAdapter : CartListAdapter by lazy {
         CartListAdapter(object : CartListener{
-            override fun onCartClicked(item: CartFood) {
-                TODO("Not yet implemented")
-            }
+           /* override fun onCartClicked(cart: Cart) {
+
+            }*/
 
             override fun onPlusTotalItemCartClicked(cart: Cart) {
                 viewModel.increaseCart(cart)
