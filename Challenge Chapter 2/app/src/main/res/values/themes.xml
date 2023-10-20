@@ -24,5 +24,10 @@
         <item name="colorOnErrorContainer">@color/app_color_on_error_container</item>
     </style>
 
+    <style name="circleImageView" >
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
     <style name="Theme.ChallengeChap2" parent="Base.Theme.ChallengeChap2" />
 </resources>
