@@ -144,6 +144,7 @@ class FoodListFragment : Fragment() {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = this@FoodListFragment.categoryAdapter
         }
+        setObserveDataCategory()
     }
 
     private fun setupFoodRecyclerView() {

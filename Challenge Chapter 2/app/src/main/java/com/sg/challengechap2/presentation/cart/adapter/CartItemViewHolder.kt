@@ -72,7 +72,7 @@ class CheckoutViewHolder(
                 )
             tvFoodNameCheckout.text = item.foodName
             tvFoodPriceCheckout.text = item.foodPrice.toString()
-            tvFoodPriceCheckout.text = String.format("Rp.", (item.foodPrice * item.itemQuantity))
+            tvFoodPriceCheckout.text = ("Rp "+ item.itemQuantity * item.foodPrice)
         }
     }
 
