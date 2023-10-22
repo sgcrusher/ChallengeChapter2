@@ -11,23 +11,19 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sg.challengechap2.R
-import com.sg.challengechap2.data.dummy.CategoryDataSource
-import com.sg.challengechap2.data.dummy.CategoryDataSourceImpl
-import com.sg.challengechap2.data.dummy.FoodDataSource
-import com.sg.challengechap2.data.dummy.FoodDataSourceImpl
 import com.sg.challengechap2.data.local.database.AppDatabase
-import com.sg.challengechap2.data.local.database.datasource.FoodDatabaseDataSource
 import com.sg.challengechap2.data.local.datastore.UserPreferenceDataSourceImpl
 import com.sg.challengechap2.data.local.datastore.appDataStore
+import com.sg.challengechap2.data.network.api.datasource.RestaurantApiDataSourceImpl
+import com.sg.challengechap2.data.network.api.service.RestaurantService
 import com.sg.challengechap2.data.repository.FoodRepository
 import com.sg.challengechap2.data.repository.FoodRepositoryImpl
 import com.sg.challengechap2.databinding.FragmentFoodListBinding
 import com.sg.challengechap2.model.CategoryFood
 import com.sg.challengechap2.model.Food
 import com.sg.challengechap2.presentation.detail.DetailActivity
-import com.sg.challengechap2.presentation.home.adapter.AdapterLayoutMode
-import com.sg.challengechap2.presentation.home.adapter.CategoryListAdapter
-import com.sg.challengechap2.presentation.home.adapter.FoodListAdapter
+import com.sg.challengechap2.presentation.home.adapter.category.CategoryListAdapter
+import com.sg.challengechap2.presentation.home.adapter.food.FoodListAdapter
 import com.sg.challengechap2.presentation.main.MainViewModel
 import com.sg.challengechap2.utils.GenericViewModelFactory
 import com.sg.challengechap2.utils.PreferenceDataStoreHelperImpl
@@ -38,38 +34,24 @@ class FoodListFragment : Fragment() {
 
     private lateinit var binding: FragmentFoodListBinding
 
-    private val categoryDataSource: CategoryDataSource by lazy {
-        CategoryDataSourceImpl()
-    }
-
 
     private val categoryAdapter: CategoryListAdapter by lazy {
-        CategoryListAdapter(categoryDataSource) {
-            clickCategory(it)
+        CategoryListAdapter {
+           foodViewModel.getFoods(it.slug)
         }
     }
-
-    private fun clickCategory(category: CategoryFood) {
-        val categoryName = category.categoryName
-        Toast.makeText(requireContext(), "$categoryName", Toast.LENGTH_SHORT).show()
-    }
-
-    private val foodDataSource: FoodDataSource by lazy {
-        FoodDataSourceImpl()
-    }
-
     private val foodAdapter: FoodListAdapter by lazy {
         FoodListAdapter(AdapterLayoutMode.LINEAR) { food: Food ->
             navigateToDetail(food)
         }
     }
 
+
     private val foodViewModel: FoodViewModel by viewModels {
         // val cds : CategoryDataSource = CategoryDataSourceImpl()
-        val database = AppDatabase.getInstance(requireContext())
-        val foodDao = database.foodDao()
-        val foodDataSource = FoodDatabaseDataSource(foodDao)
-        val repo: FoodRepository = FoodRepositoryImpl(foodDataSource)
+        val service = RestaurantService.invoke()
+        val foodDataSource = RestaurantApiDataSourceImpl(service)
+        val repo : FoodRepository = FoodRepositoryImpl(foodDataSource)
         GenericViewModelFactory.create(FoodViewModel(repo))
     }
 
@@ -100,10 +82,18 @@ class FoodListFragment : Fragment() {
         setupCategoryRecyclerview()
         setupFoodRecyclerView()
         toggleLayoutMode()
+        getData()
 
     }
 
-    private fun setObserveData() {
+
+    private fun getData() {
+        foodViewModel.getFoods()
+        foodViewModel.getCategories()
+    }
+
+
+    private fun setObserveDataFood() {
         foodViewModel.foodData.observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = { result ->
@@ -144,6 +134,7 @@ class FoodListFragment : Fragment() {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = this@FoodListFragment.categoryAdapter
         }
+        setObserveDataCategory()
     }
 
     private fun setupFoodRecyclerView() {
@@ -152,14 +143,9 @@ class FoodListFragment : Fragment() {
             layoutManager = GridLayoutManager(requireContext(), span)
             adapter = this@FoodListFragment.foodAdapter
         }
-        setObserveData()
+        setObserveDataFood()
     }
 
-//    private fun setupSwitch() {
-//        binding.buttonSwitchMode.setOnClickListener {
-//            toggleLayoutMode()
-//        }
-//    }
 
     private fun toggleLayoutMode() {
         dataStoreViewModel.userLinearLayoutLiveData.observe(viewLifecycleOwner) {
@@ -170,46 +156,45 @@ class FoodListFragment : Fragment() {
             dataStoreViewModel.setLinearLayoutPref(isUsingLinear)
             (binding.rvFoodList.layoutManager as GridLayoutManager).spanCount = if (isUsingLinear) 2 else 1
             foodAdapter.adapterLayoutMode = if(isUsingLinear) AdapterLayoutMode.GRID else AdapterLayoutMode.LINEAR
-            setObserveData()
+            setObserveDataFood()
         }
 
     }
 
+    private fun setObserveDataCategory() {
+        foodViewModel.categories.observe(viewLifecycleOwner){
+            it.proceedWhen(
+                doOnSuccess = { result ->
+                    binding.layoutStateCategory.root.isVisible = false
+                    binding.layoutStateCategory.pbLoading.isVisible = false
+                    binding.layoutStateCategory.tvError.isVisible = false
+                    binding.rvCategoryList.isVisible = true
+                    result.payload?.let {
+                        categoryAdapter.setData(it)
+                    }
+                },
+                doOnLoading = {
+                    binding.layoutStateCategory.root.isVisible = true
+                    binding.layoutStateCategory.pbLoading.isVisible = true
+                    binding.layoutStateCategory.tvError.isVisible = false
+                    binding.rvCategoryList.isVisible = false
+                },
+                doOnError = { err ->
+                    binding.layoutStateCategory.root.isVisible = true
+                    binding.layoutStateCategory.pbLoading.isVisible = false
+                    binding.layoutStateCategory.tvError.isVisible = true
+                    binding.layoutStateCategory.tvError.text = err.exception?.message.orEmpty()
+                    binding.rvCategoryList.isVisible = false
+                }, doOnEmpty = {
+                    binding.layoutStateCategory.root.isVisible = true
+                    binding.layoutStateCategory.pbLoading.isVisible = false
+                    binding.layoutStateCategory.tvError.isVisible = true
+                    binding.layoutStateCategory.tvError.text = getString(R.string.no_value)
+                    binding.rvCategoryList.isVisible = false
+                }
+            )
+        }
+    }
+
 }
 
-/*binding.buttonSwitchMode.setOnClickListener {
-            if (binding.buttonSwitchMode.isClickable){
-                dataStoreViewModel.setLinearLayoutPref(true)
-                binding.buttonSwitchMode.setImageResource(R.drawable.ic_grid_menu)
-                (binding.rvFoodList.layoutManager as GridLayoutManager).spanCount = if (true) 2 else 1
-                foodAdapter.adapterLayoutMode = if (false) AdapterLayoutMode.LINEAR else AdapterLayoutMode.GRID
-                setObserveData()
-
-            } else {
-                dataStoreViewModel.setLinearLayoutPref(true)
-                binding.buttonSwitchMode.setImageResource(R.drawable.ic_list_menu)
-                (binding.rvFoodList.layoutManager as GridLayoutManager).spanCount = if (true) 1 else 2
-                foodAdapter.adapterLayoutMode = if (false) AdapterLayoutMode.LINEAR else AdapterLayoutMode.GRID
-                setObserveData()
-            }*/
-
-
-/*when (binding.buttonSwitchMode.isClickable) {
-    AdapterLayoutMode.LINEAR -> {
-        dataStoreViewModel.setLinearLayoutPref(isUsingLinear = 1)
-        binding.buttonSwitchMode.setImageResource(R.drawable.ic_grid_menu)
-        (binding.rvFoodList.layoutManager as GridLayoutManager).spanCount = 2
-        foodAdapter.adapterLayoutMode = AdapterLayoutMode.GRID
-    }
-
-    AdapterLayoutMode.GRID -> {
-        dataStoreViewModel.setLinearLayoutPref(isUsingLinear = 0)
-        binding.buttonSwitchMode.setImageResource(R.drawable.ic_list_menu)
-        (binding.rvFoodList.layoutManager as GridLayoutManager).spanCount = 1
-        foodAdapter.adapterLayoutMode = AdapterLayoutMode.LINEAR
-    }
-}*/
-//setObserveData()
-//  }
-
-//}

@@ -37,15 +37,16 @@
             <TextView
                 android:id="@+id/tv_food_cart_name"
                 style="@style/TextAppearance.Material3.TitleMedium"
-                android:layout_width="151dp"
-                android:layout_height="34dp"
-                android:layout_marginHorizontal="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="110dp"
+                android:layout_marginEnd="40dp"
                 android:fontFamily="@font/poppins_bold"
                 android:textAlignment="textStart"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 app:layout_constraintStart_toEndOf="@+id/iv_cart_menu"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/tv_food_1" />
+                tools:text="mie ayam pedas manis" />
 
             <ImageView
                 android:id="@+id/ic_delete_cart"
@@ -59,9 +60,9 @@
             <TextView
                 android:id="@+id/tv_food_cart_price"
                 style="@style/TextAppearance.Material3.TitleSmall"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
+                android:layout_marginHorizontal="110dp"
                 android:layout_marginVertical="4dp"
                 android:fontFamily="@font/poppins_light"
                 android:textAlignment="textStart"
@@ -114,10 +115,11 @@
                 android:layout_marginHorizontal="4dp"
                 android:alpha="0.5"
                 android:autofillHints=""
-                android:ems="16"
+                android:ems="18"
+                android:textColor="@color/black"
                 android:inputType="text"
-                android:padding="8dp"
                 android:text="@string/et_note_cart"
+                tools:text="Sambal di pisah ya...."
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/iv_cart_menu"

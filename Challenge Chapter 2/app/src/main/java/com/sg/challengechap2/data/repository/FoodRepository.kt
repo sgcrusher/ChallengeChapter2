@@ -1,35 +1,35 @@
 package com.sg.challengechap2.data.repository
 
-import com.sg.challengechap2.data.dummy.CategoryDataSource
-import com.sg.challengechap2.data.local.database.datasource.FoodDataSource
-import com.sg.challengechap2.data.local.database.mapper.toFoodList
+
+import com.sg.challengechap2.data.network.api.datasource.RestaurantApiDataSource
+import com.sg.challengechap2.data.network.api.model.category.toCategoryList
+import com.sg.challengechap2.data.network.api.model.food.toFoodList
 import com.sg.challengechap2.model.CategoryFood
 import com.sg.challengechap2.model.Food
 import com.sg.challengechap2.utils.ResultWrapper
-import com.sg.challengechap2.utils.proceed
-import kotlinx.coroutines.delay
+import com.sg.challengechap2.utils.proceedFlow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
+
 
 interface FoodRepository {
-   // fun getCategories(): List<CategoryFood>
+    suspend fun getCategories(): Flow<ResultWrapper<List<CategoryFood>>>
 
-    fun getFoods(): Flow<ResultWrapper<List<Food>>>
+    suspend  fun getFoods(category: String? = null): Flow<ResultWrapper<List<Food>>>
 }
 
 class FoodRepositoryImpl(
-    private val foodDataSource: FoodDataSource,
-   // private val categoryDataSource: CategoryDataSource
+    private val apiDataSource: RestaurantApiDataSource
 ) : FoodRepository {
-   // override fun getCategories(): List<CategoryFood> {
-    //    return categoryDataSource.getCategories()
-   // }
 
-    override fun getFoods(): Flow<ResultWrapper<List<Food>>> {
-        return foodDataSource.getAllFoods().map { proceed { it.toFoodList() } }.onStart {
-            emit((ResultWrapper.Loading()))
-            delay(2000)
+    override suspend fun getCategories(): Flow<ResultWrapper<List<CategoryFood>>> {
+        return proceedFlow {
+            apiDataSource.getCategories().data?.toCategoryList() ?: emptyList()
+        }
+    }
+
+    override suspend fun getFoods(category: String?): Flow<ResultWrapper<List<Food>>> {
+        return proceedFlow {
+            apiDataSource.getFoods(category).data?.toFoodList() ?: emptyList()
         }
     }
 
