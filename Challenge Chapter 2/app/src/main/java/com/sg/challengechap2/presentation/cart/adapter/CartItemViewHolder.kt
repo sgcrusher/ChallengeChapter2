@@ -43,7 +43,7 @@ class CartItemViewHolder(
         binding.apply {
             ivCartMenu.load(item.foodImgUrl){crossfade(true)}
             tvFoodCartName.text = item.foodName
-            tvFoodCartPrice.text = String.format("Rp. ",item.foodPrice * item.itemQuantity)
+            tvFoodCartPrice.text = item.foodPrice.toString()
             tvCartTotal.text = item.itemQuantity.toString()
         }
 
@@ -72,7 +72,7 @@ class CheckoutViewHolder(
                 )
             tvFoodNameCheckout.text = item.foodName
             tvFoodPriceCheckout.text = item.foodPrice.toString()
-            tvFoodPriceCheckout.text = String.format("Rp.", (item.foodPrice * item.itemQuantity))
+            tvFoodPriceCheckout.text = item.itemQuantity.toString()
         }
     }
 
