@@ -162,6 +162,15 @@
                     android:layout_height="match_parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <include
+                    android:id="@+id/layout_state_c"
+                    layout="@layout/common_layout_content_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_category_list"
                     android:layout_width="match_parent"
