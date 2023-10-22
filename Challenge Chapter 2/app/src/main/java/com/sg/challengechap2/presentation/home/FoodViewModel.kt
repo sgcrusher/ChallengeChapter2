@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.sg.challengechap2.data.repository.FoodRepository
+import com.sg.challengechap2.data.repository.UserRepository
 import com.sg.challengechap2.model.CategoryFood
 import com.sg.challengechap2.model.Food
 import com.sg.challengechap2.utils.ResultWrapper
@@ -13,7 +14,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class FoodViewModel(private val repo: FoodRepository) : ViewModel() {
+class FoodViewModel(private val repo: FoodRepository,
+private val userRepo : UserRepository) : ViewModel() {
 
 
     private val _categories = MutableLiveData<ResultWrapper<List<CategoryFood>>>()
@@ -24,6 +26,9 @@ class FoodViewModel(private val repo: FoodRepository) : ViewModel() {
     private val _foodData = MutableLiveData<ResultWrapper<List<Food>>>()
     val foodData: LiveData<ResultWrapper<List<Food>>>
         get() = _foodData
+
+
+    fun getCurrentUser() = userRepo.getCurrentUser()
 
 
     fun getCategories() {

@@ -1,6 +1,7 @@
 package com.sg.challengechap2.data.network.api.service
 
 
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.sg.challengechap2.BuildConfig
 import com.sg.challengechap2.data.network.api.model.category.CategoryResponse
 import com.sg.challengechap2.data.network.api.model.food.FoodResponse
@@ -27,8 +28,9 @@ interface RestaurantService {
     suspend fun createOrder(@Body orderRequest: OrderRequest): OrdersResponse
     companion object {
         @JvmStatic
-        operator fun invoke(): RestaurantService {
+        operator fun invoke(chucker: ChuckerInterceptor): RestaurantService {
             val okHttpClient = OkHttpClient.Builder()
+                .addInterceptor(chucker)
                 .connectTimeout(120, TimeUnit.SECONDS)
                 .readTimeout(120, TimeUnit.SECONDS)
                 .build()

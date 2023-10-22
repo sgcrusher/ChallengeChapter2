@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.sg.challengechap2.R
 import com.sg.challengechap2.data.local.database.AppDatabase
 import com.sg.challengechap2.data.local.database.datasource.CartDataSource
@@ -24,9 +25,10 @@ import com.sg.challengechap2.utils.proceedWhen
 class CheckoutActivity : AppCompatActivity() {
 
     private val viewModel:ChecktViewModel by viewModels {
+        val chucker = ChuckerInterceptor(this.applicationContext)
         val database = AppDatabase.getInstance(this)
         val cartDao = database.cartDao()
-        val service = RestaurantService.invoke()
+        val service = RestaurantService.invoke(chucker)
         val orderDataSource = RestaurantApiDataSourceImpl(service)
         val cartDataSource: CartDataSource = CartDatabaseDataSource(cartDao)
         val repo: CartRepository = CartRepositoryImpl(cartDataSource, orderDataSource)

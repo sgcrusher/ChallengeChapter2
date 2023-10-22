@@ -10,14 +10,19 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.google.firebase.auth.FirebaseAuth
 import com.sg.challengechap2.R
 import com.sg.challengechap2.data.local.database.AppDatabase
 import com.sg.challengechap2.data.local.datastore.UserPreferenceDataSourceImpl
 import com.sg.challengechap2.data.local.datastore.appDataStore
 import com.sg.challengechap2.data.network.api.datasource.RestaurantApiDataSourceImpl
 import com.sg.challengechap2.data.network.api.service.RestaurantService
+import com.sg.challengechap2.data.network.firebase.auth.FirebaseAuthDataSourceImpl
 import com.sg.challengechap2.data.repository.FoodRepository
 import com.sg.challengechap2.data.repository.FoodRepositoryImpl
+import com.sg.challengechap2.data.repository.UserRepository
+import com.sg.challengechap2.data.repository.UserRepositoryImpl
 import com.sg.challengechap2.databinding.FragmentFoodListBinding
 import com.sg.challengechap2.model.CategoryFood
 import com.sg.challengechap2.model.Food
@@ -49,10 +54,14 @@ class FoodListFragment : Fragment() {
 
     private val foodViewModel: FoodViewModel by viewModels {
         // val cds : CategoryDataSource = CategoryDataSourceImpl()
-        val service = RestaurantService.invoke()
+        val chucker = ChuckerInterceptor(requireContext().applicationContext)
+        val service = RestaurantService.invoke(chucker)
+        val firebaseAuth = FirebaseAuth.getInstance()
         val foodDataSource = RestaurantApiDataSourceImpl(service)
+        val userDataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
         val repo : FoodRepository = FoodRepositoryImpl(foodDataSource)
-        GenericViewModelFactory.create(FoodViewModel(repo))
+        val userRepo: UserRepository = UserRepositoryImpl(userDataSource)
+        GenericViewModelFactory.create(FoodViewModel(repo, userRepo))
     }
 
     private val dataStoreViewModel: MainViewModel by viewModels {
@@ -82,6 +91,7 @@ class FoodListFragment : Fragment() {
         setupCategoryRecyclerview()
         setupFoodRecyclerView()
         toggleLayoutMode()
+        setUsername()
         getData()
 
     }
@@ -159,6 +169,10 @@ class FoodListFragment : Fragment() {
             setObserveDataFood()
         }
 
+    }
+    private fun setUsername() {
+        val fullName = foodViewModel.getCurrentUser()?.fullName
+        binding.tvHeaderName.setText("${fullName}")
     }
 
     private fun setObserveDataCategory() {

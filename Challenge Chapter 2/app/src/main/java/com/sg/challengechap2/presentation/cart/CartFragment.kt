@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.sg.challengechap2.R
 import com.sg.challengechap2.data.local.database.AppDatabase
 import com.sg.challengechap2.data.local.database.datasource.CartDataSource
@@ -57,9 +58,10 @@ class CartFragment : Fragment() {
         })
     }
     private val viewModel : CartViewModel by viewModels {
+        val chucker = ChuckerInterceptor(requireContext().applicationContext)
         val database = AppDatabase.getInstance(requireContext())
         val cartDao = database.cartDao()
-        val service = RestaurantService.invoke()
+        val service = RestaurantService.invoke(chucker)
         val orderDataSource = RestaurantApiDataSourceImpl(service)
         val cartDataSource: CartDataSource = CartDatabaseDataSource(cartDao)
         val repo : CartRepository = CartRepositoryImpl(cartDataSource, orderDataSource)
