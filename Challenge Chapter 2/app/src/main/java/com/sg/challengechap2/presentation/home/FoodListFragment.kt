@@ -211,3 +211,14 @@ class FoodListFragment : Fragment() {
 
 }
 
+    AdapterLayoutMode.GRID -> {
+        dataStoreViewModel.setLinearLayoutPref(isUsingLinear = 0)
+        binding.buttonSwitchMode.setImageResource(R.drawable.ic_list_menu)
+        (binding.rvFoodList.layoutManager as GridLayoutManager).spanCount = 1
+        foodAdapter.adapterLayoutMode = AdapterLayoutMode.LINEAR
+    }
+}*/
+//setObserveData()
+//  }
+
+//}
