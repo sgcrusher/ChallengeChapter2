@@ -1,6 +1,7 @@
 package com.sg.challengechap2.presentation.checkout
 
 import CheckoutViewHolder
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -15,6 +16,7 @@ import com.sg.challengechap2.data.network.api.service.RestaurantService
 import com.sg.challengechap2.data.repository.CartRepository
 import com.sg.challengechap2.data.repository.CartRepositoryImpl
 import com.sg.challengechap2.databinding.ActivityCheckoutBinding
+import com.sg.challengechap2.presentation.cart.CartFragment
 import com.sg.challengechap2.presentation.cart.adapter.CartListAdapter
 import com.sg.challengechap2.utils.GenericViewModelFactory
 import com.sg.challengechap2.utils.proceedWhen
@@ -120,8 +122,16 @@ class CheckoutActivity : AppCompatActivity() {
         binding.btnOrder.setOnClickListener {
             Toast.makeText(this, "Succes Checkout", Toast.LENGTH_SHORT).show()
             deleteAllCart()
+            NavigateToCart()
+            NavigateToCart()
         }
     }
+
+    private fun NavigateToCart() {
+        val intent = Intent(this, CartFragment::class.java)
+        startActivity(intent)
+    }
+
 
     private fun btnBackClickListener() {
         binding.toolbar.setNavigationOnClickListener {
