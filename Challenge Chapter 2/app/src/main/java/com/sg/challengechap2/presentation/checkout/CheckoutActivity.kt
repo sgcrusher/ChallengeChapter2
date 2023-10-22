@@ -123,7 +123,6 @@ class CheckoutActivity : AppCompatActivity() {
             Toast.makeText(this, "Succes Checkout", Toast.LENGTH_SHORT).show()
             deleteAllCart()
             NavigateToCart()
-            NavigateToCart()
         }
     }
 
