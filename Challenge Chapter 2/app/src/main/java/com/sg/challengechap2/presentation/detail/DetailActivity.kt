@@ -12,6 +12,8 @@ import com.sg.challengechap2.R
 import com.sg.challengechap2.data.local.database.AppDatabase
 import com.sg.challengechap2.data.local.database.datasource.CartDataSource
 import com.sg.challengechap2.data.local.database.datasource.CartDatabaseDataSource
+import com.sg.challengechap2.data.network.api.datasource.RestaurantApiDataSourceImpl
+import com.sg.challengechap2.data.network.api.service.RestaurantService
 import com.sg.challengechap2.data.repository.CartRepository
 import com.sg.challengechap2.data.repository.CartRepositoryImpl
 import com.sg.challengechap2.databinding.ActivityDetailBinding
@@ -28,8 +30,10 @@ class DetailActivity : AppCompatActivity() {
     private val viewModel: DetailViewModel by viewModels {
         val database = AppDatabase.getInstance(this)
         val cartDao = database.cartDao()
+        val service = RestaurantService.invoke()
+        val orderDataSource = RestaurantApiDataSourceImpl(service)
         val cartDataSource: CartDataSource = CartDatabaseDataSource(cartDao)
-        val repo: CartRepository = CartRepositoryImpl(cartDataSource)
+        val repo: CartRepository = CartRepositoryImpl(cartDataSource, orderDataSource)
         GenericViewModelFactory.create(DetailViewModel(intent?.extras, repo)
         )
     }
@@ -84,28 +88,28 @@ class DetailActivity : AppCompatActivity() {
 
     private fun showFoodData(food: Food?) {
         food?.let {
-            binding.ivFoodDetailImg.load(it.foodImg)
+            binding.ivFoodDetailImg.load(it.foodImgUrl)
             binding.tvFoodNameDetail.text = it.foodName
             binding.tvFoodPrice.text = getString(R.string.tv_food_price_format, food?.foodPrice)
             binding.tvFoodDescription.text = it.foodDescription
             binding.tvShopLocation.text = food?.foodShopLocation
-            binding.tvFoodShopDistance.text = getString(R.string.tv_shop_distance_format, food?.foodShopDistance)
             binding.buttonAddToChart.text = getString(R.string.tv_add_to_chart)
         }
     }
 
     private fun mapsClickListener(food: Food?) {
         binding.llShopLocation.setOnClickListener {
-            navigateToGoogleMaps(food)
+           // navigateToGoogleMaps(food)
+            Toast.makeText(this, "succes map", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun navigateToGoogleMaps(food: Food?) {
+    /*private fun navigateToGoogleMaps(food: Food?) {
         val url = food?.foodUrllocation
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         startActivity(intent)
 
-    }
+    }*/
 
     companion object {
         const val EXTRA_PRODUCT = "EXTRA_PRODUCT"

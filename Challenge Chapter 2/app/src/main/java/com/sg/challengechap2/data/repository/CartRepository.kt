@@ -3,9 +3,11 @@ package com.sg.challengechap2.data.repository
 import com.sg.challengechap2.data.local.database.datasource.CartDataSource
 import com.sg.challengechap2.data.local.database.entity.CartEntity
 import com.sg.challengechap2.data.local.database.mapper.toCartEntity
-import com.sg.challengechap2.data.local.database.mapper.toCartFoodList
+import com.sg.challengechap2.data.local.database.mapper.toCartList
+import com.sg.challengechap2.data.network.api.datasource.RestaurantApiDataSource
+import com.sg.challengechap2.data.network.api.model.order.OrderItemRequest
+import com.sg.challengechap2.data.network.api.model.order.OrderRequest
 import com.sg.challengechap2.model.Cart
-import com.sg.challengechap2.model.CartFood
 import com.sg.challengechap2.model.Food
 import com.sg.challengechap2.utils.ResultWrapper
 import com.sg.challengechap2.utils.proceed
@@ -17,25 +19,29 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 
 interface CartRepository {
-    fun getCartList(): Flow<ResultWrapper<Pair<List<CartFood>, Double>>>
+    fun getCartList(): Flow<ResultWrapper<Pair<List<Cart>, Double>>>
     suspend fun createCart(food: Food, totalQuantity: Int): Flow<ResultWrapper<Boolean>>
     suspend fun decreaseCart(item: Cart): Flow<ResultWrapper<Boolean>>
     suspend fun increaseCart(item: Cart): Flow<ResultWrapper<Boolean>>
     suspend fun setCartNotes(item: Cart): Flow<ResultWrapper<Boolean>>
     suspend fun deleteCart(item: Cart): Flow<ResultWrapper<Boolean>>
     suspend fun deleteAll()
+    suspend fun order(items: List<Cart>) : Flow<ResultWrapper<Boolean>>
+
 }
 
 class CartRepositoryImpl(
-    private val dataSource: CartDataSource
+    private val dataSource: CartDataSource,
+    private val restaurantApiDataSource: RestaurantApiDataSource
+
 ) : CartRepository {
-    override fun getCartList(): Flow<ResultWrapper<Pair<List<CartFood>, Double>>> {
+    override fun getCartList(): Flow<ResultWrapper<Pair<List<Cart>, Double>>> {
         return dataSource.getAllCarts().map {
             proceed {
-                val cartList = it.toCartFoodList()
+                val cartList = it.toCartList()
                 val totalPrice = cartList.sumOf {
-                    val quantity = it.cart.itemQuantity
-                    val pricePerItem = it.food.foodPrice
+                    val quantity = it.itemQuantity
+                    val pricePerItem = it.foodPrice
                     quantity * pricePerItem
                 }
                 Pair(cartList, totalPrice)
@@ -55,7 +61,11 @@ class CartRepositoryImpl(
         return food.foodId?.let { foodId ->
             proceedFlow {
                 val affectedRow = dataSource.insertCart(
-                    CartEntity(foodId = foodId, itemQuantity = totalQuantity)
+                    CartEntity(foodId = foodId,
+                        itemQuantity = totalQuantity,
+                        foodName = food.foodName,
+                        foodPrice = food.foodPrice,
+                        foodImgUrl = food.foodImgUrl)
                 )
                 affectedRow > 0
             }
@@ -93,5 +103,21 @@ class CartRepositoryImpl(
     override suspend fun deleteAll() {
         dataSource.deleteAllCarts()
     }
+
+    override suspend fun order(items: List<Cart>): Flow<ResultWrapper<Boolean>> {
+        return proceedFlow {
+            val orderItems = items.map {
+                OrderItemRequest(it.itemNotes, it.foodPrice.toInt(), it.foodName, it.itemQuantity)
+            }
+
+            val orderRequest = OrderRequest(
+                orderItems,
+                total = null,
+                username = null
+            )
+            restaurantApiDataSource.createOrder(orderRequest).status == true
+        }
+    }
+
 
 }

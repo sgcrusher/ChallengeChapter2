@@ -11,20 +11,20 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.sg.challengechap2.core.ViewHolderBinder
 import com.sg.challengechap2.databinding.CheckoutListItemBinding
 import com.sg.challengechap2.databinding.ItemListCartBinding
-import com.sg.challengechap2.model.CartFood
+import com.sg.challengechap2.model.Cart
 
 class CartListAdapter(
     private val cartListener: CartListener? = null
 ) : RecyclerView.Adapter<ViewHolder>() {
 
 
-    private val dataDiffer = AsyncListDiffer(this,object : DiffUtil.ItemCallback<CartFood>(){
+    private val dataDiffer = AsyncListDiffer(this,object : DiffUtil.ItemCallback<Cart>(){
 
-        override fun areItemsTheSame(oldItem: CartFood, newItem: CartFood): Boolean {
-            return oldItem.cart.id == newItem.cart.id && oldItem.food.foodId == newItem.food.foodId
+        override fun areItemsTheSame(oldItem: Cart, newItem: Cart): Boolean {
+            return oldItem.id == newItem.id && oldItem.foodId == newItem.foodId
         }
 
-        override fun areContentsTheSame(oldItem: CartFood, newItem: CartFood): Boolean {
+        override fun areContentsTheSame(oldItem: Cart, newItem: Cart): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
     })
@@ -43,14 +43,14 @@ class CartListAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        (holder as ViewHolderBinder<CartFood>).bind((dataDiffer.currentList[position]))
+        (holder as ViewHolderBinder<Cart>).bind((dataDiffer.currentList[position]))
     }
 
     override fun getItemCount(): Int {
         return dataDiffer.currentList.size
     }
 
-    fun setData(cartData:List<CartFood>){
+    fun setData(cartData:List<Cart>){
         dataDiffer.submitList(cartData)
     }
 }

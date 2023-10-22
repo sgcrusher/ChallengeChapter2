@@ -6,12 +6,12 @@ import java.util.UUID
 
 @Parcelize
 data class Food(
-    val foodId: Int? = null,
+    val foodId: Int?,
     val foodName: String,
     val foodDescription: String,
     val foodPrice: Double,
-    val foodImg: Int,
-    val foodShopDistance: Double,
+    val foodImgUrl: String,
+    val foodFormattedPrice: String,
     val foodShopLocation: String,
-    val foodUrllocation: String
+   // val foodUrllocation: String
 ) : Parcelable

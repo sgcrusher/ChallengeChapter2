@@ -1,7 +1,6 @@
 package com.sg.challengechap2.presentation.cart.adapter
 
 import com.sg.challengechap2.model.Cart
-import com.sg.challengechap2.model.CartFood
 
 interface CartListener {
 
