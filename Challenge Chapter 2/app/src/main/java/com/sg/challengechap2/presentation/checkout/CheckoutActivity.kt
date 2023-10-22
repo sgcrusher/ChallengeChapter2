@@ -119,6 +119,7 @@ class CheckoutActivity : AppCompatActivity() {
     private fun checkoutClickListener() {
         binding.btnOrder.setOnClickListener {
             Toast.makeText(this, "Succes Checkout", Toast.LENGTH_SHORT).show()
+            deleteAllCart()
         }
     }
 

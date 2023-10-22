@@ -92,43 +92,6 @@ class FoodListFragment : Fragment() {
         foodViewModel.getCategories()
     }
 
-private fun setObserveDataCategories(){
-    foodViewModel.categories.observe(viewLifecycleOwner){
-        it.proceedWhen(
-            doOnSuccess = { result ->
-                binding.clCategory.isVisible = true
-                binding.layoutStateC.root.isVisible = false
-                binding.layoutStateC.pbLoading.isVisible = false
-                binding.layoutStateC.tvError.isVisible = false
-                binding.rvCategoryList.isVisible = true
-                result.payload?.let {
-                    categoryAdapter.setData(it)
-                }
-            },
-            doOnLoading = {
-                binding.clCategory.isVisible = false
-                binding.layoutStateC.root.isVisible = true
-                binding.layoutStateC.pbLoading.isVisible = false
-                binding.layoutStateC.tvError.isVisible = false
-                binding.rvCategoryList.isVisible = false
-            },
-            doOnError = { err ->
-                binding.layoutStateC.root.isVisible = true
-                binding.layoutStateC.pbLoading.isVisible = false
-                binding.layoutStateC.tvError.isVisible = true
-                binding.layoutStateC.tvError.text = err.exception?.message.orEmpty()
-                binding.rvCategoryList.isVisible = false
-            }, doOnEmpty = {
-                binding.layoutStateC.root.isVisible = true
-                binding.layoutStateC.pbLoading.isVisible = false
-                binding.layoutStateC.tvError.isVisible = true
-                binding.layoutStateC.tvError.text = getString(R.string.no_value)
-                binding.rvCategoryList.isVisible = false
-            }
-
-        )
-    }
-}
 
     private fun setObserveDataFood() {
         foodViewModel.foodData.observe(viewLifecycleOwner) {
@@ -171,7 +134,7 @@ private fun setObserveDataCategories(){
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = this@FoodListFragment.categoryAdapter
         }
-        setObserveDataCategories()
+        setObserveDataCategory()
     }
 
     private fun setupFoodRecyclerView() {
@@ -202,31 +165,31 @@ private fun setObserveDataCategories(){
         foodViewModel.categories.observe(viewLifecycleOwner){
             it.proceedWhen(
                 doOnSuccess = { result ->
-                    binding.layoutState.root.isVisible = false
-                    binding.layoutState.pbLoading.isVisible = false
-                    binding.layoutState.tvError.isVisible = false
+                    binding.layoutStateCategory.root.isVisible = false
+                    binding.layoutStateCategory.pbLoading.isVisible = false
+                    binding.layoutStateCategory.tvError.isVisible = false
                     binding.rvCategoryList.isVisible = true
                     result.payload?.let {
                         categoryAdapter.setData(it)
                     }
                 },
                 doOnLoading = {
-                    binding.layoutState.root.isVisible = true
-                    binding.layoutState.pbLoading.isVisible = false
-                    binding.layoutState.tvError.isVisible = false
+                    binding.layoutStateCategory.root.isVisible = true
+                    binding.layoutStateCategory.pbLoading.isVisible = true
+                    binding.layoutStateCategory.tvError.isVisible = false
                     binding.rvCategoryList.isVisible = false
                 },
                 doOnError = { err ->
-                    binding.layoutState.root.isVisible = true
-                    binding.layoutState.pbLoading.isVisible = false
-                    binding.layoutState.tvError.isVisible = true
-                    binding.layoutState.tvError.text = err.exception?.message.orEmpty()
+                    binding.layoutStateCategory.root.isVisible = true
+                    binding.layoutStateCategory.pbLoading.isVisible = false
+                    binding.layoutStateCategory.tvError.isVisible = true
+                    binding.layoutStateCategory.tvError.text = err.exception?.message.orEmpty()
                     binding.rvCategoryList.isVisible = false
                 }, doOnEmpty = {
-                    binding.layoutState.root.isVisible = true
-                    binding.layoutState.pbLoading.isVisible = false
-                    binding.layoutState.tvError.isVisible = true
-                    binding.layoutState.tvError.text = getString(R.string.no_value)
+                    binding.layoutStateCategory.root.isVisible = true
+                    binding.layoutStateCategory.pbLoading.isVisible = false
+                    binding.layoutStateCategory.tvError.isVisible = true
+                    binding.layoutStateCategory.tvError.text = getString(R.string.no_value)
                     binding.rvCategoryList.isVisible = false
                 }
             )
