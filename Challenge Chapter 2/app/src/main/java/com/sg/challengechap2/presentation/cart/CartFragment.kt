@@ -32,9 +32,6 @@ class CartFragment : Fragment() {
 
     private val cartListAdapter : CartListAdapter by lazy {
         CartListAdapter(object : CartListener{
-           /* override fun onCartClicked(cart: Cart) {
-
-            }*/
            /* override fun onCartClicked(item: Cart) {
                 TODO("Not yet implemented")
             }*/
@@ -66,8 +63,7 @@ class CartFragment : Fragment() {
         val cartDataSource: CartDataSource = CartDatabaseDataSource(cartDao)
         val repo : CartRepository = CartRepositoryImpl(cartDataSource, orderDataSource)
         GenericViewModelFactory.create(
-            CartViewModel(repo)
-        )
+            CartViewModel(repo))
     }
 
 
