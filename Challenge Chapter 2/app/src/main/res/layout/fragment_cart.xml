@@ -26,6 +26,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_cart_list"
         android:layout_width="match_parent"
@@ -33,7 +34,9 @@
         android:scrollbars="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
+        tools:itemCount="6"
         app:layout_constraintTop_toBottomOf="@id/iv_header_cart"
+        app:layout_constraintBottom_toTopOf="@+id/cv_checkout_cart"
         tools:listitem="@layout/item_list_cart" />
 
     <include
@@ -43,6 +46,7 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/cv_checkout_cart"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_checkout_cart"
