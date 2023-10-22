@@ -1,4 +1,4 @@
-package com.sg.challengechap2.presentation.home.adapter
+package com.sg.challengechap2.presentation.home.adapter.food
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,6 +10,7 @@ import com.sg.challengechap2.core.ViewHolderBinder
 import com.sg.challengechap2.databinding.ItemGridFoodBinding
 import com.sg.challengechap2.databinding.ItemLinearFoodBinding
 import com.sg.challengechap2.model.Food
+import com.sg.challengechap2.presentation.home.AdapterLayoutMode
 
 class FoodListAdapter (
     var adapterLayoutMode: AdapterLayoutMode,

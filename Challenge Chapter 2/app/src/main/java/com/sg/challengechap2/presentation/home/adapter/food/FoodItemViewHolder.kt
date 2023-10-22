@@ -1,6 +1,7 @@
-package com.sg.challengechap2.presentation.home.adapter
+package com.sg.challengechap2.presentation.home.adapter.food
 
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.sg.challengechap2.R
 import com.sg.challengechap2.core.ViewHolderBinder
 import com.sg.challengechap2.databinding.ItemGridFoodBinding
@@ -15,10 +16,10 @@ class LinearFoodItemViewHolder(
         binding.root.setOnClickListener{
             onItemClick.invoke(item)
         }
-        binding.ivFoodList.setImageResource(item.foodImg)
+        binding.ivFoodList.load(item.foodImgUrl)
         binding.tvFoodName.text = item.foodName
         binding.tvFoodPrice.text = itemView.context.getString(R.string.tv_food_price_format, item.foodPrice)
-        binding.tvFoodShopDistance.text = itemView.context.getString(R.string.tv_shop_distance_format, item.foodShopDistance)
+        //binding.tvFoodShopDistance.text = itemView.context.getString(R.string.tv_shop_distance_format, item.foodShopDistance)
     }
 }
 
@@ -31,7 +32,7 @@ class GridFoodItemViewHolder(
         binding.root.setOnClickListener{
             onItemClick.invoke(item)
         }
-        binding.ivFoodGrid.setImageResource(item.foodImg)
+        binding.ivFoodGrid.load(item.foodImgUrl)
         binding.tvFoodName.text = item.foodName
         binding.tvFoodPrice.text = itemView.context.getString(R.string.tv_food_price_format, item.foodPrice)
     }

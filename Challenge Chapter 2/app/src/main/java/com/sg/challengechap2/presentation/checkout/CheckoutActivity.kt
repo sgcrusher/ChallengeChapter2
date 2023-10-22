@@ -10,6 +10,8 @@ import com.sg.challengechap2.R
 import com.sg.challengechap2.data.local.database.AppDatabase
 import com.sg.challengechap2.data.local.database.datasource.CartDataSource
 import com.sg.challengechap2.data.local.database.datasource.CartDatabaseDataSource
+import com.sg.challengechap2.data.network.api.datasource.RestaurantApiDataSourceImpl
+import com.sg.challengechap2.data.network.api.service.RestaurantService
 import com.sg.challengechap2.data.repository.CartRepository
 import com.sg.challengechap2.data.repository.CartRepositoryImpl
 import com.sg.challengechap2.databinding.ActivityCheckoutBinding
@@ -20,13 +22,12 @@ import com.sg.challengechap2.utils.proceedWhen
 class CheckoutActivity : AppCompatActivity() {
 
     private val viewModel:ChecktViewModel by viewModels {
-        val database =
-            AppDatabase.getInstance(this)
+        val database = AppDatabase.getInstance(this)
         val cartDao = database.cartDao()
-        val cartDataSource: CartDataSource =
-            CartDatabaseDataSource(cartDao)
-        val repo: CartRepository =
-            CartRepositoryImpl(cartDataSource)
+        val service = RestaurantService.invoke()
+        val orderDataSource = RestaurantApiDataSourceImpl(service)
+        val cartDataSource: CartDataSource = CartDatabaseDataSource(cartDao)
+        val repo: CartRepository = CartRepositoryImpl(cartDataSource, orderDataSource)
         GenericViewModelFactory.create(
             ChecktViewModel(repo)
         )
@@ -110,6 +111,9 @@ class CheckoutActivity : AppCompatActivity() {
     }
     private fun setupList() {
         binding.rvCheckout.adapter = adapter
+    }
+    private fun deleteAllCart() {
+        viewModel.deleteAll()
     }
 
     private fun checkoutClickListener() {

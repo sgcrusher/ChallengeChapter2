@@ -1,15 +1,15 @@
-package com.sg.challengechap2.data.network.api.model
+package com.sg.challengechap2.data.network.api.model.category
 
 
 import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 
 @Keep
-data class FoodResponse(
+data class CategoryResponse(
     @SerializedName("code")
     val code: Int?,
     @SerializedName("data")
-    val data: List<Food>?,
+    val data: List<CategoryItemResponse>?,
     @SerializedName("message")
     val message: String?,
     @SerializedName("status")

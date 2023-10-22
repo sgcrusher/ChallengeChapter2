@@ -12,11 +12,12 @@ import com.sg.challengechap2.R
 import com.sg.challengechap2.data.local.database.AppDatabase
 import com.sg.challengechap2.data.local.database.datasource.CartDataSource
 import com.sg.challengechap2.data.local.database.datasource.CartDatabaseDataSource
+import com.sg.challengechap2.data.network.api.datasource.RestaurantApiDataSourceImpl
+import com.sg.challengechap2.data.network.api.service.RestaurantService
 import com.sg.challengechap2.data.repository.CartRepository
 import com.sg.challengechap2.data.repository.CartRepositoryImpl
 import com.sg.challengechap2.databinding.FragmentCartBinding
 import com.sg.challengechap2.model.Cart
-import com.sg.challengechap2.model.CartFood
 import com.sg.challengechap2.presentation.cart.adapter.CartListAdapter
 import com.sg.challengechap2.presentation.cart.adapter.CartListener
 import com.sg.challengechap2.presentation.checkout.CheckoutActivity
@@ -30,9 +31,9 @@ class CartFragment : Fragment() {
 
     private val cartListAdapter : CartListAdapter by lazy {
         CartListAdapter(object : CartListener{
-            override fun onCartClicked(item: CartFood) {
+           /* override fun onCartClicked(item: Cart) {
                 TODO("Not yet implemented")
-            }
+            }*/
 
             override fun onPlusTotalItemCartClicked(cart: Cart) {
                 viewModel.increaseCart(cart)
@@ -55,11 +56,12 @@ class CartFragment : Fragment() {
     private val viewModel : CartViewModel by viewModels {
         val database = AppDatabase.getInstance(requireContext())
         val cartDao = database.cartDao()
+        val service = RestaurantService.invoke()
+        val orderDataSource = RestaurantApiDataSourceImpl(service)
         val cartDataSource: CartDataSource = CartDatabaseDataSource(cartDao)
-        val repo : CartRepository = CartRepositoryImpl(cartDataSource)
+        val repo : CartRepository = CartRepositoryImpl(cartDataSource,orderDataSource)
         GenericViewModelFactory.create(
-            CartViewModel(repo)
-        )
+            CartViewModel(repo))
     }
 
 
