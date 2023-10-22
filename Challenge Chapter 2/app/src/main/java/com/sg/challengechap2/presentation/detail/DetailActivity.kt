@@ -46,7 +46,7 @@ class DetailActivity : AppCompatActivity() {
         observeData()
         backToHomeClickListener()
         countingClickListener()
-        mapsClickListener(viewModel.food)
+        mapsClickListener()
 
     }
 
@@ -99,19 +99,21 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun mapsClickListener(food: Food?) {
+    private fun mapsClickListener() {
         binding.llShopLocation.setOnClickListener {
-           // navigateToGoogleMaps(food)
-            Toast.makeText(this, "succes map", Toast.LENGTH_SHORT).show()
+            navigateToGoogleMaps()
         }
     }
 
-    /*private fun navigateToGoogleMaps(food: Food?) {
-        val url = food?.foodUrllocation
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        startActivity(intent)
-
-    }*/
+    private fun navigateToGoogleMaps() {
+        val mapsIntentUri =
+            Uri.parse("https://maps.app.goo.gl/rVeCrMxA5cAWr1kw7")
+        val mapsIntent = Intent(
+            Intent.ACTION_VIEW,
+            mapsIntentUri
+        )
+        startActivity(mapsIntent)
+    }
 
     companion object {
         const val EXTRA_PRODUCT = "EXTRA_PRODUCT"
