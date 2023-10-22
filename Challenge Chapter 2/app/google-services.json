@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "579438305060",
+    "project_id": "challenge-binar-bda3d",
+    "storage_bucket": "challenge-binar-bda3d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:579438305060:android:2c773ace5ddc8e4bed5db1",
+        "android_client_info": {
+          "package_name": "com.sg.challengechap2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6Xqo932asgtTVouUrNfkAyNi-RjmsTFg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
