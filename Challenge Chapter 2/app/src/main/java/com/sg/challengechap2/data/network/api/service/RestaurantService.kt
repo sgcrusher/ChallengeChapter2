@@ -1,6 +1,5 @@
 package com.sg.challengechap2.data.network.api.service
 
-
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.sg.challengechap2.BuildConfig
 import com.sg.challengechap2.data.network.api.model.category.CategoryResponse

@@ -1,9 +1,7 @@
 package com.sg.challengechap2.presentation.profile
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,26 +10,18 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import coil.load
 import coil.transform.CircleCropTransformation
-import com.google.firebase.auth.FirebaseAuth
 import com.sg.challengechap2.R
-import com.sg.challengechap2.data.network.firebase.auth.FirebaseAuthDataSource
-import com.sg.challengechap2.data.network.firebase.auth.FirebaseAuthDataSourceImpl
-import com.sg.challengechap2.data.repository.UserRepositoryImpl
 import com.sg.challengechap2.databinding.FragmentProfileBinding
 import com.sg.challengechap2.presentation.login.LoginActivity
-import com.sg.challengechap2.utils.GenericViewModelFactory
 import com.sg.challengechap2.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
-
 
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
-
 
     private val viewModel: ProfileViewModel by viewModel()
 
@@ -43,7 +33,8 @@ class ProfileFragment : Fragment() {
         }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
@@ -64,9 +55,9 @@ class ProfileFragment : Fragment() {
                 Toast.makeText(requireContext(), "Change Photo Profile Success !", Toast.LENGTH_SHORT).show()
                 showUserData()
             }, doOnError = {
-                Toast.makeText(requireContext(), "Change Photo Profile Failed !", Toast.LENGTH_SHORT).show()
-                showUserData()
-            })
+                    Toast.makeText(requireContext(), "Change Photo Profile Failed !", Toast.LENGTH_SHORT).show()
+                    showUserData()
+                })
         }
         viewModel.changeProfileResult.observe(viewLifecycleOwner) {
             it.proceedWhen(
@@ -79,7 +70,6 @@ class ProfileFragment : Fragment() {
                     binding.pbLoading.isVisible = false
                     binding.btnChangeProfile.isVisible = true
                     Toast.makeText(requireContext(), "Change Profile data Failed !", Toast.LENGTH_SHORT).show()
-
                 },
                 doOnLoading = {
                     binding.pbLoading.isVisible = true
@@ -117,7 +107,7 @@ class ProfileFragment : Fragment() {
             .setNegativeButton(
                 "No"
             ) { dialog, id ->
-                //no-op , do nothing
+                // no-op , do nothing
             }.create()
         dialog.show()
     }
@@ -134,10 +124,9 @@ class ProfileFragment : Fragment() {
         AlertDialog.Builder(requireContext())
             .setMessage(
                 "Permintaan ubah password akan dikirim ke email: " +
-                        "${viewModel.getCurrentUser()?.email}"
+                    "${viewModel.getCurrentUser()?.email}"
             )
             .setPositiveButton("Ok") { _, _ ->
-
             }.create().show()
     }
 
@@ -145,7 +134,6 @@ class ProfileFragment : Fragment() {
         val fullName = binding.layoutForm.etName.text.toString().trim()
         viewModel.updateFullName(fullName)
     }
-
 
     private fun checkNameValidation(): Boolean {
         val fullName = binding.layoutForm.etName.text.toString().trim()
@@ -169,7 +157,6 @@ class ProfileFragment : Fragment() {
                 error(R.drawable.img_logo)
                 transformations(CircleCropTransformation())
             }
-
         }
     }
 

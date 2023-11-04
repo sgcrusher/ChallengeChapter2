@@ -19,15 +19,15 @@ import com.sg.challengechap2.data.repository.FoodRepository
 import com.sg.challengechap2.data.repository.FoodRepositoryImpl
 import com.sg.challengechap2.data.repository.UserRepository
 import com.sg.challengechap2.data.repository.UserRepositoryImpl
-import com.sg.challengechap2.presentation.login.LoginViewModel
 import com.sg.challengechap2.presentation.cart.CartViewModel
 import com.sg.challengechap2.presentation.checkout.ChecktViewModel
+import com.sg.challengechap2.presentation.detail.DetailViewModel
 import com.sg.challengechap2.presentation.home.FoodViewModel
+import com.sg.challengechap2.presentation.login.LoginViewModel
 import com.sg.challengechap2.presentation.main.MainViewModel
 import com.sg.challengechap2.presentation.profile.ProfileViewModel
 import com.sg.challengechap2.presentation.register.RegisterViewModel
 import com.sg.challengechap2.presentation.splashscreen.SplashScreenViewModel
-import com.sg.challengechap2.presentation.detail.DetailViewModel
 import com.sg.challengechap2.utils.PreferenceDataStoreHelper
 import com.sg.challengechap2.utils.PreferenceDataStoreHelperImpl
 import org.koin.android.ext.koin.androidContext
@@ -37,7 +37,6 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 object AppModules {
-
 
     private val localModule = module {
         single { AppDatabase.getInstance(androidContext()) }
@@ -63,7 +62,6 @@ object AppModules {
         single<FoodRepository> { FoodRepositoryImpl(get()) }
         single<UserRepository> { UserRepositoryImpl(get()) }
     }
-
 
     private val viewModelModule = module {
         viewModelOf(::LoginViewModel)

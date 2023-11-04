@@ -1,31 +1,18 @@
 package com.sg.challengechap2.presentation.checkout
 
-import CheckoutViewHolder
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.sg.challengechap2.R
-import com.sg.challengechap2.data.local.database.AppDatabase
-import com.sg.challengechap2.data.local.database.datasource.CartDataSource
-import com.sg.challengechap2.data.local.database.datasource.CartDatabaseDataSource
-import com.sg.challengechap2.data.network.api.datasource.RestaurantApiDataSourceImpl
-import com.sg.challengechap2.data.network.api.service.RestaurantService
-import com.sg.challengechap2.data.repository.CartRepository
-import com.sg.challengechap2.data.repository.CartRepositoryImpl
 import com.sg.challengechap2.databinding.ActivityCheckoutBinding
-import com.sg.challengechap2.presentation.cart.CartFragment
 import com.sg.challengechap2.presentation.cart.adapter.CartListAdapter
-import com.sg.challengechap2.utils.GenericViewModelFactory
 import com.sg.challengechap2.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CheckoutActivity : AppCompatActivity() {
 
-    private val viewModel:ChecktViewModel by viewModel()
+    private val viewModel: ChecktViewModel by viewModel()
 
     private val binding: ActivityCheckoutBinding by lazy {
         ActivityCheckoutBinding.inflate(
@@ -117,8 +104,6 @@ class CheckoutActivity : AppCompatActivity() {
             viewModel.createOrder()
         }
     }
-
-
 
     private fun btnBackClickListener() {
         binding.toolbar.setNavigationOnClickListener {

@@ -2,7 +2,6 @@ package com.sg.challengechap2.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import java.util.UUID
 
 @Parcelize
 data class Food(
@@ -12,6 +11,6 @@ data class Food(
     val foodPrice: Double,
     val foodImgUrl: String,
     val foodFormattedPrice: String,
-    val foodShopLocation: String,
-   // val foodUrllocation: String
+    val foodShopLocation: String
+    // val foodUrllocation: String
 ) : Parcelable

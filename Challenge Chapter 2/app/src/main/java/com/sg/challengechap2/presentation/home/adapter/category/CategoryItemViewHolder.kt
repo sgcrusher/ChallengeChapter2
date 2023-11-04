@@ -11,7 +11,7 @@ class CategoryItemViewHolder(
     private val onItemClick: (CategoryFood) -> Unit
 ) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<CategoryFood> {
     override fun bind(item: CategoryFood) {
-        binding.root.setOnClickListener{
+        binding.root.setOnClickListener {
             onItemClick.invoke(item)
         }
         binding.icCategoryImg.load(item.categoryImg)

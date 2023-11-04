@@ -8,11 +8,10 @@ import com.sg.challengechap2.model.Cart
 import com.sg.challengechap2.presentation.cart.adapter.CartListener
 import com.sg.challengechap2.utils.doneEditing
 
-
 class CartItemViewHolder(
     private val binding: ItemListCartBinding,
-    private val cartListener: CartListener?,
-) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Cart>{
+    private val cartListener: CartListener?
+) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Cart> {
     override fun bind(item: Cart) {
         setCartData(item)
         setCartNotes(item)
@@ -21,10 +20,10 @@ class CartItemViewHolder(
 
     private fun setClickListener(item: Cart) {
         binding.apply {
-            ivPlusCart.setOnClickListener{cartListener?.onPlusTotalItemCartClicked(item)}
-            ivMinusCart.setOnClickListener{cartListener?.onMinusTotalItemCartClicked(item)}
-            icDeleteCart.setOnClickListener{cartListener?.onRemoveCartClicked(item)}
-           // itemView.setOnClickListener{cartListener?.onCartClicked(item)}
+            ivPlusCart.setOnClickListener { cartListener?.onPlusTotalItemCartClicked(item) }
+            ivMinusCart.setOnClickListener { cartListener?.onMinusTotalItemCartClicked(item) }
+            icDeleteCart.setOnClickListener { cartListener?.onRemoveCartClicked(item) }
+            // itemView.setOnClickListener{cartListener?.onCartClicked(item)}
         }
     }
 
@@ -41,19 +40,16 @@ class CartItemViewHolder(
 
     private fun setCartData(item: Cart) {
         binding.apply {
-            ivCartMenu.load(item.foodImgUrl){crossfade(true)}
+            ivCartMenu.load(item.foodImgUrl) { crossfade(true) }
             tvFoodCartName.text = item.foodName
-            tvFoodCartPrice.text = ("Rp "+ item.itemQuantity * item.foodPrice)
+            tvFoodCartPrice.text = String.format("Rp ", (item.itemQuantity * item.foodPrice))
             tvCartTotal.text = item.itemQuantity.toString()
         }
-
     }
-
 }
 
-
 class CheckoutViewHolder(
-    private val binding: CheckoutListItemBinding,
+    private val binding: CheckoutListItemBinding
 ) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Cart> {
     override fun bind(item: Cart) {
         setCartData(item)
@@ -72,7 +68,7 @@ class CheckoutViewHolder(
                 )
             tvFoodNameCheckout.text = item.foodName
             tvFoodPriceCheckout.text = item.foodPrice.toString()
-            tvFoodPriceCheckout.text = ("Rp "+ item.itemQuantity * item.foodPrice)
+            tvFoodPriceCheckout.text = String.format("Rp ", (item.itemQuantity * item.foodPrice))
         }
     }
 
@@ -80,4 +76,3 @@ class CheckoutViewHolder(
         binding.etCardNote.text = item.itemNotes
     }
 }
-

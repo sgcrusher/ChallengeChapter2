@@ -24,5 +24,4 @@ fun Cart?.toCartEntity() = CartEntity(
     foodImgUrl = this?.foodImgUrl.orEmpty()
 )
 
-
 fun List<CartEntity?>.toCartList() = this.map { it.toCart() }

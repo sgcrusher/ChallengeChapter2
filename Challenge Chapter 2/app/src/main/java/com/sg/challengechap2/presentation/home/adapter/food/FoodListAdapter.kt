@@ -12,29 +12,32 @@ import com.sg.challengechap2.databinding.ItemLinearFoodBinding
 import com.sg.challengechap2.model.Food
 import com.sg.challengechap2.presentation.home.AdapterLayoutMode
 
-class FoodListAdapter (
+class FoodListAdapter(
     var adapterLayoutMode: AdapterLayoutMode,
-    private val onItemClick : (Food) -> Unit
-) : RecyclerView.Adapter<ViewHolder>(){
+    private val onItemClick: (Food) -> Unit
+) : RecyclerView.Adapter<ViewHolder>() {
 
-    private val dataDiffer = AsyncListDiffer(this,object : DiffUtil.ItemCallback<Food>(){
-        override fun areItemsTheSame(oldItem: Food, newItem: Food): Boolean {
-            return oldItem.foodId == newItem.foodId
+    private val dataDiffer = AsyncListDiffer(
+        this,
+        object : DiffUtil.ItemCallback<Food>() {
+            override fun areItemsTheSame(oldItem: Food, newItem: Food): Boolean {
+                return oldItem.foodId == newItem.foodId
+            }
+
+            override fun areContentsTheSame(oldItem: Food, newItem: Food): Boolean {
+                return oldItem.hashCode() == newItem.hashCode()
+            }
         }
-
-        override fun areContentsTheSame(oldItem: Food, newItem: Food): Boolean {
-            return oldItem.hashCode() == newItem.hashCode()
-        }
-
-    })
-
+    )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return when(viewType){
+        return when (viewType) {
             AdapterLayoutMode.LINEAR.ordinal -> {
                 LinearFoodItemViewHolder(
                     binding = ItemLinearFoodBinding.inflate(
-                        LayoutInflater.from(parent.context), parent,false
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
                     ),
                     onItemClick = onItemClick
                 )
@@ -42,7 +45,9 @@ class FoodListAdapter (
             else -> {
                 GridFoodItemViewHolder(
                     binding = ItemGridFoodBinding.inflate(
-                        LayoutInflater.from(parent.context), parent, false
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
                     ),
                     onItemClick = onItemClick
                 )
@@ -62,11 +67,10 @@ class FoodListAdapter (
         return adapterLayoutMode.ordinal
     }
 
-    fun submitList(data : List<Food>){
+    fun submitList(data: List<Food>) {
         dataDiffer.submitList(data)
     }
-    fun refreshList(){
-        notifyItemRangeChanged(0,dataDiffer.currentList.size)
+    fun refreshList() {
+        notifyItemRangeChanged(0, dataDiffer.currentList.size)
     }
-
 }

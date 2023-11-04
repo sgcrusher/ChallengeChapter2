@@ -4,7 +4,7 @@ import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
 @Keep
-class OrderItemRequest (
+class OrderItemRequest(
     @SerializedName("catatan")
     val notes: String?,
     @SerializedName("harga")

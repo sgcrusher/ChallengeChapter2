@@ -140,7 +140,7 @@
                             android:fontFamily="@font/poppins_light"
                             android:text="@string/tv_banner_2"
                             android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
-                            android:textSize="10sp"
+                            android:textSize="11sp"
                             android:textStyle="normal" />
 
                     </LinearLayout>

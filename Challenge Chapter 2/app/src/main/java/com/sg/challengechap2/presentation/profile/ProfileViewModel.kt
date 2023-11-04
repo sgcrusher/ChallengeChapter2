@@ -10,20 +10,17 @@ import com.sg.challengechap2.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-
 class ProfileViewModel(private val repo: UserRepository) : ViewModel() {
 
     private val _changePhotoResult = MutableLiveData<ResultWrapper<Boolean>>()
     val changePhotoResult: LiveData<ResultWrapper<Boolean>>
         get() = _changePhotoResult
 
-
     private val _changeProfileResult = MutableLiveData<ResultWrapper<Boolean>>()
     val changeProfileResult: LiveData<ResultWrapper<Boolean>>
         get() = _changeProfileResult
 
     fun getCurrentUser() = repo.getCurrentUser()
-
 
     fun updateProfilePicture(photoUri: Uri?) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -34,8 +31,6 @@ class ProfileViewModel(private val repo: UserRepository) : ViewModel() {
             }
         }
     }
-
-
 
     fun updateFullName(fullName: String) {
         viewModelScope.launch(Dispatchers.IO) {

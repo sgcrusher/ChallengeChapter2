@@ -1,10 +1,9 @@
 package com.sg.challengechap2.data.repository
 
-
 import android.net.Uri
 import com.sg.challengechap2.data.network.firebase.auth.FirebaseAuthDataSource
-import com.sg.challengechap2.model.toUser
 import com.sg.challengechap2.model.User
+import com.sg.challengechap2.model.toUser
 import com.sg.challengechap2.utils.ResultWrapper
 import com.sg.challengechap2.utils.proceedFlow
 import kotlinx.coroutines.flow.Flow
@@ -79,5 +78,4 @@ class UserRepositoryImpl(private val dataSource: FirebaseAuthDataSource) : UserR
     override fun sendChangePasswordRequestByEmail(): Boolean {
         return dataSource.sendChangePasswordRequestByEmail()
     }
-
 }
