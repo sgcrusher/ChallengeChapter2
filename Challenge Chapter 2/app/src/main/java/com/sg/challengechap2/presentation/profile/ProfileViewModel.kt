@@ -10,11 +10,6 @@ import com.sg.challengechap2.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-/**
-Written with love by Muhammad Hermas Yuda Pamungkas
-Github : https://github.com/hermasyp
- **/
-
 class ProfileViewModel(private val repo: UserRepository) : ViewModel() {
 
     private val _changePhotoResult = MutableLiveData<ResultWrapper<Boolean>>()

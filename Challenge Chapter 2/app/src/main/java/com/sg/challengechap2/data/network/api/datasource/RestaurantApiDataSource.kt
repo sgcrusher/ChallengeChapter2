@@ -1,13 +1,12 @@
 package com.sg.challengechap2.data.network.api.datasource
 
-
 import com.sg.challengechap2.data.network.api.model.category.CategoryResponse
 import com.sg.challengechap2.data.network.api.model.food.FoodResponse
 import com.sg.challengechap2.data.network.api.model.order.OrderRequest
 import com.sg.challengechap2.data.network.api.model.order.OrdersResponse
 import com.sg.challengechap2.data.network.api.service.RestaurantService
 
-interface RestaurantApiDataSource{
+interface RestaurantApiDataSource {
 
     suspend fun getFoods(category: String? = null): FoodResponse
 
@@ -18,7 +17,7 @@ interface RestaurantApiDataSource{
 
 class RestaurantApiDataSourceImpl(
     private val service: RestaurantService
-) : RestaurantApiDataSource{
+) : RestaurantApiDataSource {
     override suspend fun getFoods(category: String?): FoodResponse {
         return service.getFoods(category)
     }
@@ -30,6 +29,4 @@ class RestaurantApiDataSourceImpl(
     override suspend fun createOrder(orderRequest: OrderRequest): OrdersResponse {
         return service.createOrder(orderRequest)
     }
-
-
 }

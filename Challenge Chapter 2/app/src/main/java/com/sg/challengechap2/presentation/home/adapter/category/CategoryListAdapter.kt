@@ -6,33 +6,34 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import coil.load
 import com.sg.challengechap2.core.ViewHolderBinder
 import com.sg.challengechap2.databinding.ItemListCategoryBinding
 import com.sg.challengechap2.model.CategoryFood
 
-class CategoryListAdapter (
+class CategoryListAdapter(
     private val onItemClick: (CategoryFood) -> Unit
-) : RecyclerView.Adapter<ViewHolder>(){
+) : RecyclerView.Adapter<ViewHolder>() {
 
-    private val differ = AsyncListDiffer(this,
+    private val differ = AsyncListDiffer(
+        this,
         object : DiffUtil.ItemCallback<CategoryFood>() {
             override fun areItemsTheSame(
                 oldItem: CategoryFood,
-                newItem: CategoryFood,
+                newItem: CategoryFood
             ): Boolean {
                 return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
                 oldItem: CategoryFood,
-                newItem: CategoryFood,
+                newItem: CategoryFood
             ): Boolean {
                 return oldItem.hashCode() == newItem.hashCode()
             }
-        })
+        }
+    )
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryItemViewHolder {
-        val binding = ItemListCategoryBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = ItemListCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CategoryItemViewHolder(
             binding,
             onItemClick
@@ -41,7 +42,6 @@ class CategoryListAdapter (
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         (holder as ViewHolderBinder<CategoryFood>).bind(differ.currentList[position])
-
     }
 
     override fun getItemCount(): Int {
@@ -51,6 +51,4 @@ class CategoryListAdapter (
     fun setData(data: List<CategoryFood>) {
         differ.submitList(data)
     }
-
-
 }

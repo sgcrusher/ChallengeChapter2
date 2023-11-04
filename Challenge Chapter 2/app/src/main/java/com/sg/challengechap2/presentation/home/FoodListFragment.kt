@@ -1,48 +1,30 @@
 package com.sg.challengechap2.presentation.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.google.firebase.auth.FirebaseAuth
 import com.sg.challengechap2.R
-import com.sg.challengechap2.data.local.database.AppDatabase
-import com.sg.challengechap2.data.local.datastore.UserPreferenceDataSourceImpl
-import com.sg.challengechap2.data.local.datastore.appDataStore
-import com.sg.challengechap2.data.network.api.datasource.RestaurantApiDataSourceImpl
-import com.sg.challengechap2.data.network.api.service.RestaurantService
-import com.sg.challengechap2.data.network.firebase.auth.FirebaseAuthDataSourceImpl
-import com.sg.challengechap2.data.repository.FoodRepository
-import com.sg.challengechap2.data.repository.FoodRepositoryImpl
-import com.sg.challengechap2.data.repository.UserRepository
-import com.sg.challengechap2.data.repository.UserRepositoryImpl
 import com.sg.challengechap2.databinding.FragmentFoodListBinding
-import com.sg.challengechap2.model.CategoryFood
 import com.sg.challengechap2.model.Food
 import com.sg.challengechap2.presentation.detail.DetailActivity
 import com.sg.challengechap2.presentation.home.adapter.category.CategoryListAdapter
 import com.sg.challengechap2.presentation.home.adapter.food.FoodListAdapter
 import com.sg.challengechap2.presentation.main.MainViewModel
-import com.sg.challengechap2.utils.GenericViewModelFactory
-import com.sg.challengechap2.utils.PreferenceDataStoreHelperImpl
 import com.sg.challengechap2.utils.proceedWhen
-
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FoodListFragment : Fragment() {
 
     private lateinit var binding: FragmentFoodListBinding
 
-
     private val categoryAdapter: CategoryListAdapter by lazy {
         CategoryListAdapter {
-           foodViewModel.getFoods(it.slug)
+            foodViewModel.getFoods(it.slug)
         }
     }
     private val foodAdapter: FoodListAdapter by lazy {
@@ -51,35 +33,16 @@ class FoodListFragment : Fragment() {
         }
     }
 
+    private val foodViewModel: FoodViewModel by viewModel()
 
-    private val foodViewModel: FoodViewModel by viewModels {
-        // val cds : CategoryDataSource = CategoryDataSourceImpl()
-        val chucker = ChuckerInterceptor(requireContext().applicationContext)
-        val service = RestaurantService.invoke(chucker)
-        val firebaseAuth = FirebaseAuth.getInstance()
-        val foodDataSource = RestaurantApiDataSourceImpl(service)
-        val userDataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
-        val repo : FoodRepository = FoodRepositoryImpl(foodDataSource)
-        val userRepo: UserRepository = UserRepositoryImpl(userDataSource)
-        GenericViewModelFactory.create(FoodViewModel(repo, userRepo))
-    }
-
-    private val dataStoreViewModel: MainViewModel by viewModels {
-        val dataStore = this.requireContext().appDataStore
-        val dataStoreHelper = PreferenceDataStoreHelperImpl(dataStore)
-        val userPreferenceDataSource = UserPreferenceDataSourceImpl(dataStoreHelper)
-        GenericViewModelFactory.create(MainViewModel(userPreferenceDataSource))
-    }
-
+    private val dataStoreViewModel: MainViewModel by viewModel()
     private fun navigateToDetail(food: Food) {
-        /*val action = FoodListFragmentDirections.actionFoodListFragmentToDetailFragment(food)
-        findNavController().navigate(action)*/
         DetailActivity.startActivity(requireContext(), food)
     }
 
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentFoodListBinding.inflate(inflater, container, false)
@@ -93,15 +56,12 @@ class FoodListFragment : Fragment() {
         toggleLayoutMode()
         setUsername()
         getData()
-
     }
-
 
     private fun getData() {
         foodViewModel.getFoods()
         foodViewModel.getCategories()
     }
-
 
     private fun setObserveDataFood() {
         foodViewModel.foodData.observe(viewLifecycleOwner) {
@@ -127,7 +87,8 @@ class FoodListFragment : Fragment() {
                     binding.layoutState.tvError.isVisible = true
                     binding.layoutState.tvError.text = err.exception?.message.orEmpty()
                     binding.rvFoodList.isVisible = false
-                }, doOnEmpty = {
+                },
+                doOnEmpty = {
                     binding.layoutState.root.isVisible = true
                     binding.layoutState.pbLoading.isVisible = false
                     binding.layoutState.tvError.isVisible = true
@@ -156,7 +117,6 @@ class FoodListFragment : Fragment() {
         setObserveDataFood()
     }
 
-
     private fun toggleLayoutMode() {
         dataStoreViewModel.userLinearLayoutLiveData.observe(viewLifecycleOwner) {
             binding.buttonSwitchMode.isChecked = it
@@ -165,18 +125,17 @@ class FoodListFragment : Fragment() {
         binding.buttonSwitchMode.setOnCheckedChangeListener { _, isUsingLinear ->
             dataStoreViewModel.setLinearLayoutPref(isUsingLinear)
             (binding.rvFoodList.layoutManager as GridLayoutManager).spanCount = if (isUsingLinear) 2 else 1
-            foodAdapter.adapterLayoutMode = if(isUsingLinear) AdapterLayoutMode.GRID else AdapterLayoutMode.LINEAR
+            foodAdapter.adapterLayoutMode = if (isUsingLinear) AdapterLayoutMode.GRID else AdapterLayoutMode.LINEAR
             setObserveDataFood()
         }
-
     }
     private fun setUsername() {
         val fullName = foodViewModel.getCurrentUser()?.fullName
-        binding.tvHeaderName.setText("${fullName}")
+        binding.tvHeaderName.setText("$fullName")
     }
 
     private fun setObserveDataCategory() {
-        foodViewModel.categories.observe(viewLifecycleOwner){
+        foodViewModel.categories.observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = { result ->
                     binding.layoutStateCategory.root.isVisible = false
@@ -199,7 +158,8 @@ class FoodListFragment : Fragment() {
                     binding.layoutStateCategory.tvError.isVisible = true
                     binding.layoutStateCategory.tvError.text = err.exception?.message.orEmpty()
                     binding.rvCategoryList.isVisible = false
-                }, doOnEmpty = {
+                },
+                doOnEmpty = {
                     binding.layoutStateCategory.root.isVisible = true
                     binding.layoutStateCategory.pbLoading.isVisible = false
                     binding.layoutStateCategory.tvError.isVisible = true
@@ -209,6 +169,4 @@ class FoodListFragment : Fragment() {
             )
         }
     }
-
 }
-

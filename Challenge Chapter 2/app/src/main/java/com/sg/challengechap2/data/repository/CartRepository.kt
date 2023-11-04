@@ -26,8 +26,7 @@ interface CartRepository {
     suspend fun setCartNotes(item: Cart): Flow<ResultWrapper<Boolean>>
     suspend fun deleteCart(item: Cart): Flow<ResultWrapper<Boolean>>
     suspend fun deleteAll()
-    suspend fun order(items: List<Cart>) : Flow<ResultWrapper<Boolean>>
-
+    suspend fun order(items: List<Cart>): Flow<ResultWrapper<Boolean>>
 }
 
 class CartRepositoryImpl(
@@ -47,10 +46,11 @@ class CartRepositoryImpl(
                 Pair(cartList, totalPrice)
             }
         }.map {
-            if (it.payload?.first?.isEmpty() == true)
+            if (it.payload?.first?.isEmpty() == true) {
                 ResultWrapper.Empty(it.payload)
-            else
+            } else {
                 it
+            }
         }.onStart {
             emit(ResultWrapper.Loading())
             delay(2000)
@@ -61,11 +61,13 @@ class CartRepositoryImpl(
         return food.foodId?.let { foodId ->
             proceedFlow {
                 val affectedRow = dataSource.insertCart(
-                    CartEntity(foodId = foodId,
+                    CartEntity(
+                        foodId = foodId,
                         itemQuantity = totalQuantity,
                         foodName = food.foodName,
                         foodPrice = food.foodPrice,
-                        foodImgUrl = food.foodImgUrl)
+                        foodImgUrl = food.foodImgUrl
+                    )
                 )
                 affectedRow > 0
             }
@@ -118,6 +120,4 @@ class CartRepositoryImpl(
             restaurantApiDataSource.createOrder(orderRequest).status == true
         }
     }
-
-
 }

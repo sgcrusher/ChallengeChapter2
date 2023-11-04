@@ -2,36 +2,26 @@ package com.sg.challengechap2.presentation.cart
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
-import com.chuckerteam.chucker.api.ChuckerInterceptor
+import androidx.fragment.app.Fragment
 import com.sg.challengechap2.R
-import com.sg.challengechap2.data.local.database.AppDatabase
-import com.sg.challengechap2.data.local.database.datasource.CartDataSource
-import com.sg.challengechap2.data.local.database.datasource.CartDatabaseDataSource
-import com.sg.challengechap2.data.network.api.datasource.RestaurantApiDataSourceImpl
-import com.sg.challengechap2.data.network.api.service.RestaurantService
-import com.sg.challengechap2.data.repository.CartRepository
-import com.sg.challengechap2.data.repository.CartRepositoryImpl
 import com.sg.challengechap2.databinding.FragmentCartBinding
 import com.sg.challengechap2.model.Cart
 import com.sg.challengechap2.presentation.cart.adapter.CartListAdapter
 import com.sg.challengechap2.presentation.cart.adapter.CartListener
 import com.sg.challengechap2.presentation.checkout.CheckoutActivity
-import com.sg.challengechap2.utils.GenericViewModelFactory
 import com.sg.challengechap2.utils.proceedWhen
-
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CartFragment : Fragment() {
 
     private lateinit var binding: FragmentCartBinding
 
-    private val cartListAdapter : CartListAdapter by lazy {
-        CartListAdapter(object : CartListener{
+    private val cartListAdapter: CartListAdapter by lazy {
+        CartListAdapter(object : CartListener {
            /* override fun onCartClicked(cart: Cart) {
 
             }*/
@@ -51,27 +41,16 @@ class CartFragment : Fragment() {
             override fun onUserDoneEditingNotes(newCart: Cart) {
                 viewModel.updateNotes(newCart)
             }
-
         })
     }
-    private val viewModel : CartViewModel by viewModels {
-        val chucker = ChuckerInterceptor(requireContext().applicationContext)
-        val database = AppDatabase.getInstance(requireContext())
-        val cartDao = database.cartDao()
-        val service = RestaurantService.invoke(chucker)
-        val orderDataSource = RestaurantApiDataSourceImpl(service)
-        val cartDataSource: CartDataSource = CartDatabaseDataSource(cartDao)
-        val repo : CartRepository = CartRepositoryImpl(cartDataSource,orderDataSource)
-        GenericViewModelFactory.create(
-            CartViewModel(repo))
-    }
-
+    private val viewModel: CartViewModel by viewModel()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentCartBinding.inflate(inflater,container,false)
+        binding = FragmentCartBinding.inflate(inflater, container, false)
         return binding.root
     }
 

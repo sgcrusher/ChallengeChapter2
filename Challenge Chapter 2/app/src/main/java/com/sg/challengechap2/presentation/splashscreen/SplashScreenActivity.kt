@@ -1,37 +1,21 @@
 package com.sg.challengechap2.presentation.splashscreen
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.google.firebase.auth.FirebaseAuth
-import com.sg.challengechap2.R
-import com.sg.challengechap2.data.network.firebase.auth.FirebaseAuthDataSource
-import com.sg.challengechap2.data.network.firebase.auth.FirebaseAuthDataSourceImpl
-import com.sg.challengechap2.data.repository.UserRepository
-import com.sg.challengechap2.data.repository.UserRepositoryImpl
 import com.sg.challengechap2.databinding.ActivitySplashScreenBinding
 import com.sg.challengechap2.presentation.login.LoginActivity
 import com.sg.challengechap2.presentation.main.MainActivity
-import com.sg.challengechap2.utils.GenericViewModelFactory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashScreenActivity : AppCompatActivity() {
 
-    private val viewModel : SplashScreenViewModel by viewModels{
-        GenericViewModelFactory.create(createViewModel())
-    }
+    private val viewModel: SplashScreenViewModel by viewModel()
 
-    private fun createViewModel(): SplashScreenViewModel{
-        val firebaseAuth = FirebaseAuth.getInstance()
-        val dataSource: FirebaseAuthDataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
-        val repository: UserRepository = UserRepositoryImpl(dataSource)
-        return SplashScreenViewModel(repository)
-    }
-
-    private val binding : ActivitySplashScreenBinding by lazy {
+    private val binding: ActivitySplashScreenBinding by lazy {
         ActivitySplashScreenBinding.inflate(layoutInflater)
     }
 
@@ -44,9 +28,9 @@ class SplashScreenActivity : AppCompatActivity() {
     private fun checkIfUserLogin() {
         lifecycleScope.launch {
             delay(2000)
-            if (viewModel.isUserLoggedIn()){
+            if (viewModel.isUserLoggedIn()) {
                 navigateToMain()
-            } else{
+            } else {
                 navigateToLogin()
             }
         }

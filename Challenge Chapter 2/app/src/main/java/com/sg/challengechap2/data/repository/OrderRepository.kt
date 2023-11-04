@@ -9,12 +9,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface OrderRepository {
     suspend fun createOrder(orderRequest: OrderRequest): Flow<ResultWrapper<OrdersResponse>>
-
 }
 
 class OrderRepositoryImpl(
     private val apiDataSource: RestaurantApiDataSource
-) : OrderRepository{
+) : OrderRepository {
     override suspend fun createOrder(orderRequest: OrderRequest): Flow<ResultWrapper<OrdersResponse>> {
         return proceedFlow {
             apiDataSource.createOrder(orderRequest)

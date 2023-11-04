@@ -1,8 +1,5 @@
 package com.sg.challengechap2.data.dummy
 
-import com.sg.challengechap2.R
-import com.sg.challengechap2.model.CategoryFood
-
 /*
 interface CategoryDataSource{
     fun getCategories(): List<CategoryFood>

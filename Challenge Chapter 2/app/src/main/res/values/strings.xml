@@ -5,51 +5,31 @@
     <string name="tv_banner_1">Selected Preference</string>
     <string name="tv_banner_2">You can now order from multiple restaurants at the same time</string>
     <string name="tv_category_food_1">noodles</string>
-    <string name="tv_category_food_2" translatable="false">ramen</string>
     <string name="tv_category_food_3">rice</string>
-    <string name="tv_category_food_4">seafood</string>
     <string name="tv_list_menu">List Food Menu</string>
     <string name="tv_food_1" translatable="false">Ayam Panggang</string>
     <string name="tv_price_food_1" translatable="false">Rp. 30.000</string>
-    <string name="tv_food_2" translatable="false">Nasi Kebuli</string>
-    <string name="tv_price_food_2" translatable="false">Rp. 25.000</string>
-    <string name="tv_food_3" translatable="false">Es Teler</string>
-    <string name="tv_price_food_3" translatable="false">Rp. 20.000</string>
-    <string name="tv_food_4" translatable="false">Cumi tepung</string>
-    <string name="tv_price_food_4" translatable="false">Rp. 35.000</string>
 
     <string name="tv_food_price_format" translatable="false">Rp. %.2f</string>
-    <string name="tv_shop_distance_format" translatable="false">%.1f km</string>
     <string name="tv_shop_location">Shop Location</string>
     <string name="tv_food_total" translatable="false">1</string>
     <string name="tv_add_to_chart">Add to chart</string>
     <string name="tv_detail_food" translatable="false">Ayam Panggang</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="txt_home_nav">Home</string>
-    <string name="txt_cart_nav">Cart</string>
-    <string name="txt_profile_nav">Profile</string>
+    <string name="txt_home_nav" translatable="false">Home</string>
+    <string name="txt_cart_nav" translatable="false">Cart</string>
+    <string name="txt_profile_nav" translatable="false">Profile</string>
     <string name="et_note_cart">Notes</string>
-    <string name="no_value">Tidak ada data</string>
+    <string name="no_value">No value</string>
     <string name="title_method_payment">Method pick up</string>
     <string name="txt_pick_up">Pick Up Self</string>
     <string name="txt_delivery">Delivery</string>
-    <string name="txt_transfer">Transfer</string>
-    <string name="txt_cash">Cash</string>
-    <string name="total_qty">x%s</string>
+    <string name="txt_transfer" translatable="false">Transfer</string>
+    <string name="txt_cash" translatable="false">Cash</string>
+    <string name="total_qty" translatable="false">x%s</string>
     <string name="txt_total_pembayaran_checkout">Total Price</string>
-    <string name="tv_profile">Profile</string>
-    <string name="bt_submit">Submit</string>
-    <string name="et_number">098721</string>
-    <string name="txt_number">number</string>
-    <string name="et_hello">Hello</string>
-    <string name="txt_bio">Bio</string>
-    <string name="et_password">12345</string>
-    <string name="txt_password">password</string>
-    <string name="et_username">Sandy Gustyanto</string>
-    <string name="txt_username">username</string>
     <string name="et_form_name">Name</string>
-    <string name="et_form_email">Email</string>
+    <string name="et_form_email" translatable="false">Email</string>
     <string name="et_form_password">Password</string>
     <string name="et_form_confirm_pass">Confirm password</string>
     <string name="btn_register">Register</string>
@@ -67,6 +47,13 @@
     <string name="text_change_profile">Change Profile</string>
     <string name="text_change_password">Change Password</string>
     <string name="text_logout">LogOut</string>
+    <string name="txt_method_payment">Method Payment</string>
+    <string name="txt_payment_summary">Payment Summary</string>
+    <string name="txt_order">Order</string>
+    <string name="title_cart">Cart</string>
+    <string name="title_total_price">Total Price</string>
+    <string name="title_checkout">Checkout</string>
+    <string name="tv_category_food_4">Seafood</string>
 
 
 </resources>

@@ -17,29 +17,39 @@ class CartListAdapter(
     private val cartListener: CartListener? = null
 ) : RecyclerView.Adapter<ViewHolder>() {
 
+    private val dataDiffer = AsyncListDiffer(
+        this,
+        object : DiffUtil.ItemCallback<Cart>() {
 
-    private val dataDiffer = AsyncListDiffer(this,object : DiffUtil.ItemCallback<Cart>(){
+            override fun areItemsTheSame(oldItem: Cart, newItem: Cart): Boolean {
+                return oldItem.id == newItem.id && oldItem.foodId == newItem.foodId
+            }
 
-        override fun areItemsTheSame(oldItem: Cart, newItem: Cart): Boolean {
-            return oldItem.id == newItem.id && oldItem.foodId == newItem.foodId
+            override fun areContentsTheSame(oldItem: Cart, newItem: Cart): Boolean {
+                return oldItem.hashCode() == newItem.hashCode()
+            }
         }
-
-        override fun areContentsTheSame(oldItem: Cart, newItem: Cart): Boolean {
-            return oldItem.hashCode() == newItem.hashCode()
-        }
-    })
-
+    )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return if (cartListener != null) CartItemViewHolder(
-            ItemListCartBinding.inflate(
-                LayoutInflater.from(parent.context),parent, false
-            ), cartListener
-        )else CheckoutViewHolder(
-            CheckoutListItemBinding.inflate(
-                LayoutInflater.from(parent.context), parent,false
+        return if (cartListener != null) {
+            CartItemViewHolder(
+                ItemListCartBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                ),
+                cartListener
             )
-        )
+        } else {
+            CheckoutViewHolder(
+                CheckoutListItemBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
+        }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -50,7 +60,7 @@ class CartListAdapter(
         return dataDiffer.currentList.size
     }
 
-    fun setData(cartData:List<Cart>){
+    fun setData(cartData: List<Cart>) {
         dataDiffer.submitList(cartData)
     }
 }
