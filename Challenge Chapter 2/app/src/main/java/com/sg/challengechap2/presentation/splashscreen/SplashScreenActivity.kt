@@ -17,19 +17,11 @@ import com.sg.challengechap2.presentation.main.MainActivity
 import com.sg.challengechap2.utils.GenericViewModelFactory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashScreenActivity : AppCompatActivity() {
 
-    private val viewModel : SplashScreenViewModel by viewModels{
-        GenericViewModelFactory.create(createViewModel())
-    }
-
-    private fun createViewModel(): SplashScreenViewModel{
-        val firebaseAuth = FirebaseAuth.getInstance()
-        val dataSource: FirebaseAuthDataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
-        val repository: UserRepository = UserRepositoryImpl(dataSource)
-        return SplashScreenViewModel(repository)
-    }
+    private val viewModel : SplashScreenViewModel by viewModel()
 
     private val binding : ActivitySplashScreenBinding by lazy {
         ActivitySplashScreenBinding.inflate(layoutInflater)

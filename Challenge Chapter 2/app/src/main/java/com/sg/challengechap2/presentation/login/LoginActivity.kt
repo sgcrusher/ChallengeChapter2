@@ -20,6 +20,7 @@ import com.sg.challengechap2.presentation.register.RegisterActivity
 import com.sg.challengechap2.utils.GenericViewModelFactory
 import com.sg.challengechap2.utils.highLightWord
 import com.sg.challengechap2.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
 
@@ -27,16 +28,9 @@ class LoginActivity : AppCompatActivity() {
         ActivityLoginBinding.inflate(layoutInflater)
     }
 
-    private fun createViewModel() : LoginViewModel {
-        val firebaseAuth = FirebaseAuth.getInstance()
-        val dataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
-        val repository = UserRepositoryImpl(dataSource)
-        return LoginViewModel(repository)
-    }
 
-    private val viewModel : LoginViewModel by viewModels {
-        GenericViewModelFactory.create(createViewModel())
-    }
+
+    private val viewModel : LoginViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)

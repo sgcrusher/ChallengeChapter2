@@ -24,32 +24,18 @@ import com.sg.challengechap2.databinding.FragmentProfileBinding
 import com.sg.challengechap2.presentation.login.LoginActivity
 import com.sg.challengechap2.utils.GenericViewModelFactory
 import com.sg.challengechap2.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
-    private fun createViewModel(): ProfileViewModel {
-        val firebaseAuth = FirebaseAuth.getInstance()
-        val dataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
-        val repo = UserRepositoryImpl(dataSource)
-        return ProfileViewModel(repo)
-    }
 
-    private val viewModel: ProfileViewModel by viewModels {
-        GenericViewModelFactory.create(createViewModel())
-    }
 
-    private val pickMedia =
-        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-            if (uri != null) {
-                changePhotoProfile(uri)
-            }
-        }
+    private val viewModel: ProfileViewModel by viewModel()
 
-    private fun changePhotoProfile(uri: Uri) {
-        viewModel.updateProfilePicture(uri)
-    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

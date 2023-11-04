@@ -21,6 +21,8 @@ import com.sg.challengechap2.databinding.ActivityDetailBinding
 import com.sg.challengechap2.model.Food
 import com.sg.challengechap2.utils.GenericViewModelFactory
 import com.sg.challengechap2.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class DetailActivity : AppCompatActivity() {
 
@@ -28,17 +30,7 @@ class DetailActivity : AppCompatActivity() {
         ActivityDetailBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: DetailViewModel by viewModels {
-        val chucker = ChuckerInterceptor(this.applicationContext)
-        val database = AppDatabase.getInstance(this)
-        val cartDao = database.cartDao()
-        val service = RestaurantService.invoke(chucker)
-        val orderDataSource = RestaurantApiDataSourceImpl(service)
-        val cartDataSource: CartDataSource = CartDatabaseDataSource(cartDao)
-        val repo: CartRepository = CartRepositoryImpl(cartDataSource, orderDataSource)
-        GenericViewModelFactory.create(DetailViewModel(intent?.extras, repo)
-        )
-    }
+    private val viewModel: DetailViewModel by viewModel{ parametersOf(intent?.extras)}
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)

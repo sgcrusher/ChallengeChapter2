@@ -24,6 +24,7 @@ import com.sg.challengechap2.presentation.cart.adapter.CartListener
 import com.sg.challengechap2.presentation.checkout.CheckoutActivity
 import com.sg.challengechap2.utils.GenericViewModelFactory
 import com.sg.challengechap2.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class CartFragment : Fragment() {
@@ -54,17 +55,7 @@ class CartFragment : Fragment() {
 
         })
     }
-    private val viewModel : CartViewModel by viewModels {
-        val chucker = ChuckerInterceptor(requireContext().applicationContext)
-        val database = AppDatabase.getInstance(requireContext())
-        val cartDao = database.cartDao()
-        val service = RestaurantService.invoke(chucker)
-        val orderDataSource = RestaurantApiDataSourceImpl(service)
-        val cartDataSource: CartDataSource = CartDatabaseDataSource(cartDao)
-        val repo : CartRepository = CartRepositoryImpl(cartDataSource,orderDataSource)
-        GenericViewModelFactory.create(
-            CartViewModel(repo))
-    }
+    private val viewModel : CartViewModel by viewModel()
 
 
     override fun onCreateView(

@@ -21,21 +21,12 @@ import com.sg.challengechap2.presentation.cart.CartFragment
 import com.sg.challengechap2.presentation.cart.adapter.CartListAdapter
 import com.sg.challengechap2.utils.GenericViewModelFactory
 import com.sg.challengechap2.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CheckoutActivity : AppCompatActivity() {
 
-    private val viewModel:ChecktViewModel by viewModels {
-        val chucker = ChuckerInterceptor(this.applicationContext)
-        val database = AppDatabase.getInstance(this)
-        val cartDao = database.cartDao()
-        val service = RestaurantService.invoke(chucker)
-        val orderDataSource = RestaurantApiDataSourceImpl(service)
-        val cartDataSource: CartDataSource = CartDatabaseDataSource(cartDao)
-        val repo: CartRepository = CartRepositoryImpl(cartDataSource, orderDataSource)
-        GenericViewModelFactory.create(
-            ChecktViewModel(repo)
-        )
-    }
+    private val viewModel:ChecktViewModel by viewModel()
+
     private val binding: ActivityCheckoutBinding by lazy {
         ActivityCheckoutBinding.inflate(
             layoutInflater
@@ -52,6 +43,7 @@ class CheckoutActivity : AppCompatActivity() {
         setupList()
         checkoutClickListener()
         btnBackClickListener()
+        observeOrderResult()
     }
     private fun observeData() {
         viewModel.cartList.observe(this) {
@@ -122,21 +114,43 @@ class CheckoutActivity : AppCompatActivity() {
 
     private fun checkoutClickListener() {
         binding.btnOrder.setOnClickListener {
-            Toast.makeText(this, "Succes Checkout", Toast.LENGTH_SHORT).show()
-            deleteAllCart()
-            NavigateToCart()
+            viewModel.createOrder()
         }
     }
 
-    private fun NavigateToCart() {
-        val intent = Intent(this, CartFragment::class.java)
-        startActivity(intent)
-    }
 
 
     private fun btnBackClickListener() {
         binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
+        }
+    }
+
+    private fun observeOrderResult() {
+        viewModel.orderResult.observe(this) {
+            it.proceedWhen(
+                doOnSuccess = {
+                    Toast.makeText(this, "Succes Checkout", Toast.LENGTH_SHORT).show()
+                    deleteAllCart()
+                    binding.layoutState.pbLoading.isVisible = false
+                    binding.layoutState.tvError.isVisible = false
+                },
+                doOnError = {
+                    Toast.makeText(
+                        this,
+                        "Checkout not succes",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    binding.layoutState.pbLoading.isVisible = true
+                    binding.layoutState.tvError.isVisible = false
+                },
+                doOnLoading = {
+                    binding.layoutState.pbLoading.isVisible = true
+                    binding.layoutState.tvError.isVisible = false
+                    binding.layoutState.root.isVisible = true
+                    binding.svCheckoutController.isVisible = false
+                }
+            )
         }
     }
 }

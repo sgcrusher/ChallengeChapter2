@@ -33,6 +33,7 @@ import com.sg.challengechap2.presentation.main.MainViewModel
 import com.sg.challengechap2.utils.GenericViewModelFactory
 import com.sg.challengechap2.utils.PreferenceDataStoreHelperImpl
 import com.sg.challengechap2.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class FoodListFragment : Fragment() {
@@ -52,28 +53,10 @@ class FoodListFragment : Fragment() {
     }
 
 
-    private val foodViewModel: FoodViewModel by viewModels {
-        // val cds : CategoryDataSource = CategoryDataSourceImpl()
-        val chucker = ChuckerInterceptor(requireContext().applicationContext)
-        val service = RestaurantService.invoke(chucker)
-        val firebaseAuth = FirebaseAuth.getInstance()
-        val foodDataSource = RestaurantApiDataSourceImpl(service)
-        val userDataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
-        val repo : FoodRepository = FoodRepositoryImpl(foodDataSource)
-        val userRepo: UserRepository = UserRepositoryImpl(userDataSource)
-        GenericViewModelFactory.create(FoodViewModel(repo, userRepo))
-    }
+    private val foodViewModel: FoodViewModel by viewModel()
 
-    private val dataStoreViewModel: MainViewModel by viewModels {
-        val dataStore = this.requireContext().appDataStore
-        val dataStoreHelper = PreferenceDataStoreHelperImpl(dataStore)
-        val userPreferenceDataSource = UserPreferenceDataSourceImpl(dataStoreHelper)
-        GenericViewModelFactory.create(MainViewModel(userPreferenceDataSource))
-    }
-
+    private val dataStoreViewModel: MainViewModel by viewModel()
     private fun navigateToDetail(food: Food) {
-        /*val action = FoodListFragmentDirections.actionFoodListFragmentToDetailFragment(food)
-        findNavController().navigate(action)*/
         DetailActivity.startActivity(requireContext(), food)
     }
 
