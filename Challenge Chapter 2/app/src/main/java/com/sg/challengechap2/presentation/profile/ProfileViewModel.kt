@@ -13,6 +13,9 @@ import kotlinx.coroutines.launch
 
 class ProfileViewModel(private val repo: UserRepository) : ViewModel() {
 
+    private val _changePhotoResult = MutableLiveData<ResultWrapper<Boolean>>()
+    val changePhotoResult: LiveData<ResultWrapper<Boolean>>
+        get() = _changePhotoResult
 
 
     private val _changeProfileResult = MutableLiveData<ResultWrapper<Boolean>>()
@@ -20,6 +23,17 @@ class ProfileViewModel(private val repo: UserRepository) : ViewModel() {
         get() = _changeProfileResult
 
     fun getCurrentUser() = repo.getCurrentUser()
+
+
+    fun updateProfilePicture(photoUri: Uri?) {
+        viewModelScope.launch(Dispatchers.IO) {
+            photoUri?.let {
+                repo.updateProfile(photoUri = photoUri).collect {
+                    _changePhotoResult.postValue(it)
+                }
+            }
+        }
+    }
 
 
 

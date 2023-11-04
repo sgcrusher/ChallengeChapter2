@@ -35,7 +35,12 @@ class ProfileFragment : Fragment() {
 
     private val viewModel: ProfileViewModel by viewModel()
 
-
+    private val pickMedia =
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            if (uri != null) {
+                viewModel.updateProfilePicture(uri)
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
