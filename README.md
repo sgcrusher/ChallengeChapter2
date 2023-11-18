@@ -3,8 +3,7 @@ This repo is to fulfill the task of challenge all chapter
 slicing ui from figma https://www.figma.com/file/9oDbfimYllIiqw3Xk58C6G/FASTFOOD-KELOMPOK-3?type=design&mode=design&t=XbjUwptgmVoqGgVR-0
 
 # Network Inspector
-![WhatsApp Image 2023-11-18 at 13 47 28_a65b84a1](https://github.com/sgcrusher/ChallengeChapter2/assets/115458996/01dffea4-8d5a-4c42-871e-ee1ea5bd4eac)
-
+![image](https://github.com/sgcrusher/ChallengeChapter2/assets/115458996/3d135025-e540-427e-80a7-2e2e48b70523)
 # coverage 
 ![coverage](https://github.com/sgcrusher/ChallengeChapter2/assets/115458996/08743d1a-0646-4273-8a7d-55d3a23877f7)
 
