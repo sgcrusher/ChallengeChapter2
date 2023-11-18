@@ -8,11 +8,10 @@ interface CartDataSource {
 
     fun getAllCarts(): Flow<List<CartEntity>>
     fun getCartById(cartId: Int): Flow<CartEntity>
-    suspend fun insertCarts(carts: List<CartEntity>)
     suspend fun insertCart(cart: CartEntity): Long
     suspend fun updateCart(cart: CartEntity): Int
     suspend fun deleteCart(cart: CartEntity): Int
-    suspend fun deleteAllCarts(): Int
+    suspend fun deleteAllCarts()
 }
 
 class CartDatabaseDataSource(private val cartDao: CartDao) : CartDataSource {
@@ -22,10 +21,6 @@ class CartDatabaseDataSource(private val cartDao: CartDao) : CartDataSource {
 
     override fun getCartById(cartId: Int): Flow<CartEntity> {
         return cartDao.getCartById(cartId)
-    }
-
-    override suspend fun insertCarts(carts: List<CartEntity>) {
-        return cartDao.insertCarts(carts)
     }
 
     override suspend fun insertCart(cart: CartEntity): Long {
@@ -40,7 +35,7 @@ class CartDatabaseDataSource(private val cartDao: CartDao) : CartDataSource {
         return cartDao.deleteCart(cart)
     }
 
-    override suspend fun deleteAllCarts(): Int {
+    override suspend fun deleteAllCarts() {
         return cartDao.deleteAllCarts()
     }
 }

@@ -2,6 +2,7 @@ package com.sg.challengechap2.presentation.checkout
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.sg.challengechap2.R
@@ -26,8 +27,8 @@ class CheckoutActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        observeData()
         setupList()
+        observeData()
         checkoutClickListener()
         btnBackClickListener()
         observeOrderResult()
@@ -92,6 +93,13 @@ class CheckoutActivity : AppCompatActivity() {
             )
         }
     }
+
+    private fun dialogOrder() {
+        AlertDialog.Builder(this)
+            .setMessage(getString(R.string.checkout_success))
+            .setPositiveButton(getString(R.string.ok)) { _, _ -> finish() }
+            .show()
+    }
     private fun setupList() {
         binding.rvCheckout.adapter = adapter
     }
@@ -115,7 +123,7 @@ class CheckoutActivity : AppCompatActivity() {
         viewModel.orderResult.observe(this) {
             it.proceedWhen(
                 doOnSuccess = {
-                    Toast.makeText(this, "Succes Checkout", Toast.LENGTH_SHORT).show()
+                    dialogOrder()
                     deleteAllCart()
                     binding.layoutState.pbLoading.isVisible = false
                     binding.layoutState.tvError.isVisible = false

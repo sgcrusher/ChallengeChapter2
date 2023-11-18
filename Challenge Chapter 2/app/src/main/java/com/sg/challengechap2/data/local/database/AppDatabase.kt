@@ -9,7 +9,7 @@ import com.sg.challengechap2.data.local.database.entity.CartEntity
 
 @Database(
     entities = [CartEntity::class],
-    version = 2,
+    version = 3,
     exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {

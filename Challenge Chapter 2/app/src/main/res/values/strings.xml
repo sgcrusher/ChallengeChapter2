@@ -54,6 +54,8 @@
     <string name="title_total_price">Total Price</string>
     <string name="title_checkout">Checkout</string>
     <string name="tv_category_food_4">Seafood</string>
+    <string name="checkout_success">CheckOut Success</string>
+    <string name="ok">OK</string>
 
 
 </resources>
